@@ -1,0 +1,38 @@
+[
+    {
+      "nombre": "Juan",
+      "apellidos": "Pérez",
+      "email": "juan.perez@example.com",
+      "telefono": "123456789",
+      "direccion": "Calle Principal 123",
+      "localidad": "Localidad1",
+      "ciudad": "Ciudad1",
+      "codigo_postal": "12345",
+      "contrasena": "hashed_password",
+      "pedidos": [
+        [
+            {"joya_id": "id_joya_1", "cantidad": 2},
+            {"joya_id": "id_joya_2", "cantidad": 1}
+        ],
+        [
+            {"joya_id": "id_joya_1", "cantidad": 2},
+            {"joya_id": "id_joya_2", "cantidad": 1}
+        ]
+      ]
+    },
+    {
+      "nombre": "Maria",
+      "apellidos": "López",
+      "email": "maria.lopez@example.com",
+      "telefono": "987654321",
+      "direccion": "Calle Secundaria 456",
+      "localidad": "Localidad2",
+      "ciudad": "Ciudad2",
+      "codigo_postal": "54321",
+      "contrasena": "hashed_password_2",
+      "pedidos": [
+        {"joya_id": "id_joya_1", "cantidad": 3},
+        {"joya_id": "id_joya_2", "cantidad": 2}
+      ]
+    }
+  ]

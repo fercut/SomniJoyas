@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0 url('../imagenes/bg.png') fixed; 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+}
