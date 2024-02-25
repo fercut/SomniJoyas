@@ -1,10 +1,11 @@
 import { createUser, getUsers } from '../services/database/user-db-service.js';
 import { encryptPassword } from '../utils/encrypt.js';
+import { User } from '../models/index.js';
 
 export async function getUserController(req,res,next){
   try {
     const users = await getUsers(req.query);
-    return res.send(users);
+    return res.json(users);
   } catch (error){
     next(error);
   }
@@ -36,3 +37,21 @@ export async function getUserMe(req, res, next){
     next(error);
   }
 }
+
+export async function updateUserController(req, res, next){
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const deleteUserController = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Usuario eliminado exitosamente' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar usuario' });
+  }
+};

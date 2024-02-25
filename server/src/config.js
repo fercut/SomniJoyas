@@ -6,11 +6,10 @@ const config = {
         secretKey: process.env.SECRET_KEY,
     },
     database: {
-        host: process.env.MONGODB_HOST,
-        port: process.env.MONGODB_PORT,
-        dbName: process.env.MONGODB_DBNAME,
         user: process.env.MONGODB_USER,
         password: process.env.MONGODB_PASSWORD,
+        cluster: process.env.MONGODB_CLUSTER,
+        bbdd: process.env.MONGODB_BBDD,
     },
 };
 

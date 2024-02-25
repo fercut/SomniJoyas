@@ -20,7 +20,7 @@ export function login(req, res, next){
                     return res.send({token});
                 }
             }
-            throw new HttpStatusError(401, 'Invalid credentials');
+            throw new HttpStatusError(401, 'Contraseña o email incorrecto');
         } catch(error){
             next(error);
         }

@@ -6,18 +6,7 @@ export async function getUserByName(username, password) {
 }
 
 export async function getUsers(filters){
-  const { name, after, before } = filters;
-  const query = {
-    username: name && new RegExp(name, 'i'),
-  };
-
-  //
-  const cleanedQuery = Object.fromEntries(
-    Object.entries(query).filter(([_, a]) => a !== undefined)
-  );
-  console.log(cleanedQuery)
-  const users = await User.find(cleanedQuery);
-
+  const users = await User.find();
   return users;
 }
 

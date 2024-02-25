@@ -6,17 +6,17 @@ const articlesSchema = new Schema({
   type: {
     type: String,
     require: true,
-    enum: ['ring', 'earrings', 'bracelets', 'chokers', 'chains', 'pendants']
+    enum: ['anillo', 'pendientes', 'pulseras', 'cadenas', 'gargantillas', 'colgante']
   },
   material: {
     type: String,
     require: true,
-    enum: ['silver', 'gold', 'steel']
+    enum: ['plata', 'oro', 'acero']
   },
   finish: {
     type: String,
     require: true,
-    enum: ['silver', 'golden', 'pink gold']
+    enum: ['plateado', 'dorado', ' oro rosado', 'rodiado']
   },
   dimensions: {type: String},
   details: {type: String, require: true},
@@ -25,4 +25,4 @@ const articlesSchema = new Schema({
   image: {type: String, require: true},
 }, { timestamps: true });
 
-export default model('Articles', articlesSchema);
+export default model('articles', articlesSchema);
