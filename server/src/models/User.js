@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
-  name: {type: String, require: true, trim: true},
+  name: {type: String, require: true},
   lastname: {type: String, require: true},
   email: {type: String, require: true, unique: true, trim: true},
   phone: {type: Number, require:true, unique:true, trim: true},
@@ -12,6 +12,19 @@ const userSchema = new Schema({
   city: {type: String, require: true, trim: true},
   postalCode: {type: Number, require: true, trim: true},
   password: { type: String, require: true, trim: true},
+  cart: [
+    {
+      itemId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+        default: undefined,
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+    },
+  ],
 }, { timestamps: true });
 
 export default model('users', userSchema);

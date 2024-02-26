@@ -5,7 +5,7 @@ import logger from "../utils/logger.js";
 import config from "../config.js";
 
 export function checkToken(req, res, next){
-    console.log(req.headers.authorization)
+    console.log(req.headers.token)
 
     const {authorization} = req.headers;
 

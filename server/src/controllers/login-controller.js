@@ -1,29 +1,32 @@
 import { HttpStatusError } from 'common-errors';
 import jwt from 'jsonwebtoken';
-import { getUserByName } from '../services/database/user-db-service.js';
+import { getUserByEmail } from '../services/database/user-db-service.js';
 import config from '../config.js';
 import { checkHash } from '../utils/encrypt.js';
 
-export function login(req, res, next){
+export async function login(req, res, next){
 
-    const { username, password } = req.body;
-    try{
-        const user = getUserByName(username);
+    const { email, password } = req.body;
 
-            if(user){
-                console.log(password, user.password);
+    try {
+    const user = await getUserByEmail(email);
 
-                if(checkHash(password, user.password)){
-                    const userInfo = { id: user.id, name: user.name };
-                    const jwtConfig = { expiresIn: 10 };
-                    const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig);
-                    return res.send({token});
-                }
-            }
-            throw new HttpStatusError(401, 'Contraseña o email incorrecto');
-        } catch(error){
-            next(error);
-        }
+    if (user) {
+      const isPasswordValid = await checkHash(password, user.password);
+
+      if (isPasswordValid) {
+        const userInfo = { id: user.id, name: user.name };
+        const jwtConfig = { expiresIn: 10 };
+        const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig);
+
+        return res.send({ token });
+      }
+    }
+
+    throw new HttpStatusError(401, 'Contraseña o email incorrecto');
+  } catch (error) {
+    next(error);
+  }
 }
 
 

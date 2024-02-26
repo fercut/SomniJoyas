@@ -25,4 +25,6 @@ const articlesSchema = new Schema({
   image: {type: String, require: true},
 }, { timestamps: true });
 
+const Iten = mongoose.model('Item', articlesSchema);
+
 export default model('articles', articlesSchema);

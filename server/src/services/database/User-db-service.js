@@ -1,8 +1,12 @@
 import { User } from "../../models/index.js";
 
-export async function getUserByName(username, password) {
-  const user = await User.findOne({username, password});
-  return user;
+export async function getUserByEmail(email) {
+  try {
+    const user = await User.findOne({email});
+    return user;
+  } catch (error) {
+    throw new Error('Error al obtener el usuario por email');
+  }
 }
 
 export async function getUsers(filters){

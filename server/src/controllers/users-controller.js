@@ -1,6 +1,9 @@
 import { createUser, getUsers } from '../services/database/user-db-service.js';
 import { encryptPassword } from '../utils/encrypt.js';
 import { User } from '../models/index.js';
+import { getUserByEmail } from '../services/database/user-db-service.js';
+import logger from '../utils/logger.js';
+
 
 export async function getUserController(req,res,next){
   try {
@@ -17,8 +20,10 @@ export async function createUserController(req, res, next){
     body.password = await encryptPassword(body.password);
     const users = await createUser(req.body);
     return res.status(201).send(users);
-  } catch (error) {
+    logger.info('Usuario creado con exito');
 
+  } catch (error) {
+    logger.error('Problemas al crear un usuario');
     if(error.code === 11000){
       error.status = 409;
     }
@@ -31,7 +36,7 @@ export async function createUserController(req, res, next){
 
 export async function getUserMe(req, res, next){
   try{
-    const user = await getUserByName(req.user.username);
+    const user = await getUserByEmail(req.user.email);
     return res.send(user);
   }catch(error) {
     next(error);

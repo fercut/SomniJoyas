@@ -4,3 +4,74 @@
     responses:
       '200':
         description: ping/pong
+
+paths:
+  /users:
+    get:
+      summary: Obtener lista de usuarios
+      description: Retorna una lista de todos los usuarios
+      responses:
+        '200':
+          description: Lista de usuarios obtenida exitosamente
+
+    post:
+      summary: Crear un nuevo usuario
+      description: Crea un nuevo usuario con los datos proporcionados
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuario creado exitosamente
+
+  /users/{userId}:
+    get:
+      summary: Obtener información de un usuario específico
+      description: Retorna información detallada de un usuario según su ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Información de usuario obtenida exitosamente
+
+    patch:
+      summary: Actualizar información de un usuario específico
+      description: Actualiza la información de un usuario según su ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Usuario actualizado exitosamente
+
+    delete:
+      summary: Eliminar un usuario específico
+      description: Elimina un usuario según su ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuario eliminado exitosamente

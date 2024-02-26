@@ -10,7 +10,7 @@ export async function createArticle(article){
   const articlesDoc = new Articles(article);
   try {
     const createdArticle = await articlesDoc.save();
-  logger.info('Articulo creado con exito')
+    logger.info('Articulo creado con exito')
   return createdArticle;
   } catch (error) {
     logger.info('Articulo no creado, revise bien los campos')

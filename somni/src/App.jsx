@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import NavBar from './components/NavBar';
 import Rings from './Screens/Rings';
 import Earrings from './Screens/Earrings';
@@ -18,6 +19,11 @@ const App = () => {
   const handleSearch = (searchTerm) => {
     console.log('Realizar búsqueda con término:', searchTerm);
   };
+  const [token, setToken] = useState(null);
+
+  const handleLogin = (newToken) => {
+    setToken(newToken);
+  };
 
   return (
     <Router>
@@ -36,7 +42,7 @@ const App = () => {
           <Route path="shoppingCart" element={<ShoppingCart />} />
           <Route path="contact" element={<Contact />} />
           <Route path="signin" element={<Signin />} />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={token ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
         </Routes>
       </div>
     </Router>

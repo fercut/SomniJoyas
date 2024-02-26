@@ -1,5 +1,4 @@
 .container {
-  font-family: 'Kanit', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,30 +9,49 @@
   width: 100%;
 }
 
-.field{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+.login {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: right;
-  padding: 0.5em;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
 }
 
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
   
 label {
     margin-right: 0.6em;
 }
-  
+
 input {
+  padding: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 10px;
+  width: 300px;
+}
+
+input:focus {
+  outline: 1px solid gray;
+  box-shadow: 0 0 15px gray;
+}
+  
+.container input {
+  display: flex;
   padding: 0.5em;
   margin-bottom: 1em;
   width: 300px;
   border-radius: 10px;
+  margin: 5%;
 }
   
 button {
@@ -45,9 +63,14 @@ button {
   font-size: 15px;
   color: #000; 
   cursor: pointer;
+  margin: 2%;
 }
   
 button:hover {
-  border-color: rgb(99, 210, 247); 
-  color: rgb(147, 150, 153); 
+  box-shadow: 0 0 20px gray;
+}
+button:active {
+  color: gray;
+  border: 2px solid gray;
+  box-shadow: inset 0 0 20px gray;
 }
