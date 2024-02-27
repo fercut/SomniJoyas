@@ -44,3 +44,63 @@ export const deleteArticleController = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar articulo' });
   }
 };
+
+export async function getRingsController(req, res, next) {
+  try {
+    const rings = await Articles.find({ type: 'anillo' });
+    res.status(200).json(rings);
+  } catch (error) {
+    console.error('Error al obtener los anillos:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}
+
+export async function getBraceletsController(req, res, next) {
+  try {
+    const bracelets = await Articles.find({ type: 'pulsera' });
+    res.status(200).json(bracelets);
+  } catch (error) {
+    console.error('Error al obtener las pulseras:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}
+
+export async function getChokerController(req, res, next) {
+  try {
+    const chokers = await Articles.find({ type: 'gargantilla' });
+    res.status(200).json(chokers);
+  } catch (error) {
+    console.error('Error al obtener las gargantillas:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}
+
+export async function getEarringsController(req, res, next) {
+  try {
+    const earrings = await Articles.find({ type: 'pendiente' });
+    res.status(200).json(earrings);
+  } catch (error) {
+    console.error('Error al obtener los pendientes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}
+
+export async function getChainsController(req, res, next) {
+  try {
+    const chains = await Articles.find({ type: 'cadena' });
+    res.status(200).json(chains);
+  } catch (error) {
+    console.error('Error al obtener las cadenas:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}
+
+export async function getPendantsController(req, res, next) {
+  try {
+    const pendants = await Articles.find({ type: 'colgante' });
+    res.status(200).json(pendants);
+  } catch (error) {
+    console.error('Error al obtener los colgantes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}

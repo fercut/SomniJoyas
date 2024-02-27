@@ -34,7 +34,7 @@ const ImageArticle = ({ type, imageUrl, material, finish, dimensions, details, p
           <p><b>Dimensiones:</b> {capitalizeFirstLetter(dimensions)}</p>
           <p><b>Detalles:</b> {capitalizeFirstLetter(details)}</p>
           <p><b>Precio:</b> {price}€</p>
-          <button className='shop'>Comprar</button>
+          <button className='shop-button'>Comprar</button>
         </div>
         <button className="close-button" onClick={onClose}>
           X
