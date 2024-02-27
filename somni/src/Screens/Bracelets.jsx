@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ArticlesList from '../components/ArticleList.jsx';
+import loadGif from '../assets/load.webp';
 import '../style/App.css';
 
 const Bracelets = () => {

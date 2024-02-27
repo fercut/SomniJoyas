@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate  } from 'react-router-dom';
 import Alert from '../components/Alert'; 
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const [error, setError] = useState(undefined);
+  const [message, setMessage] = useState(undefined);
+  const navigate = useNavigate();
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -39,11 +40,15 @@ const Login = ({ onLogin }) => {
       } else {
         // Manejar el caso de credenciales incorrectas
         const { message } = data
-        setError(message);
+        setMessage(message);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
+  };
+
+  const handleNavigateToSignin = () => {
+    return <Navigate to="/signin" />;
   };
 
   if (loggedIn) {
@@ -71,7 +76,8 @@ const Login = ({ onLogin }) => {
         onKeyDown={handleKeyDown}
       />
       <button onClick={handleLogin}>Iniciar Sesión</button>
-      {error && <Alert title="Error" content={error} onClose={() => setError(undefined)}/>}
+      <button onClick={() => navigate('/signin')}>Registrate</button>
+      {message && <Alert title="Error" content={message} onClose={() => setMessage(undefined)}/>}
     </div>
   );
 };

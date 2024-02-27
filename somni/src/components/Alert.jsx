@@ -9,9 +9,9 @@ const Alert = ({ title, content, onClose }) => {
 
   return (
     <div className='alert'>
-        <h1>{title}</h1>
+        <h1>{title}</h1>        
+        <p>{content}</p>
         <button onClick={handleCloseAlert}>X</button>
-      <div>{content}</div>
     </div>
   );
 };
