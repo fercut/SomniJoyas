@@ -10,7 +10,6 @@ import Pendants from './Screens/Pendants';
 import Home from './Screens/Home';
 import Contact from './Screens/Contact';
 import ShoppingCart from './Screens/ShoppingCart';
-import Search from './components/Search';
 import Signin from './Screens/Signin';
 import Login from './Screens/Login';
 import './style/App.css';
@@ -28,7 +27,6 @@ const App = () => {
   return (
     <Router>
       <NavBar />
-      <Search onSearch={handleSearch} />
       <div className="content">
         <Routes>
           <Route path="home" element={<Home />} />

@@ -104,3 +104,17 @@ export async function getPendantsController(req, res, next) {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 }
+
+export async function getSearchController(req, res, next) {
+  try {
+    const searchTerm = req.params.filtro; 
+
+    const searchResults = await Articles.find();
+
+    res.status(200).json(searchResults);
+    
+  } catch (error) {
+    console.error('Error al realizar la búsqueda:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+}

@@ -19,7 +19,7 @@ const Bracelets = () => {
       {articles.length > 0 ? (
           <ArticlesList articles={articles} />
         ) : (
-          <p>Web en mantenimiento, disculpe las molestias</p>
+          <img src={loadGif} alt="load" width={100}/>
         )}
       </div>
     </div>

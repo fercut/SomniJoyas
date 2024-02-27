@@ -10,6 +10,7 @@ import {
             getEarringsController,
             getChainsController,
             getPendantsController,
+            getSearchController,
         } from '../controllers/articles-controler.js';
 
 const router = Router();
@@ -26,5 +27,8 @@ router.get('/choker', getChokerController);
 router.get('/earrings', getEarringsController);
 router.get('/chains', getChainsController);
 router.get('/pendants', getPendantsController);
+
+// Barra de busqueda
+router.get('/search/:filtro', getSearchController);
 
 export default router;
