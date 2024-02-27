@@ -3,7 +3,7 @@ import ImageArticle from './ImageArticle';
 import '../style/ArticleCard.css'
 
 const ArticleCard = ({ article, onBuyClick }) => {
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [selectedArticle, setSelectedArticle] = useState(null)
 
     const handleBuyClick = () => {
         // Lógica para comprar el artículo
@@ -11,7 +11,11 @@ const ArticleCard = ({ article, onBuyClick }) => {
     };
 
     const handleImageClick = () => {
-      setModalOpen(true);
+        setSelectedArticle(article);
+    };
+    
+    const handleCloseModal = () => {
+        setSelectedArticle(null);
     };
   
     const capitalizeFirstLetter = (word) => {
@@ -36,9 +40,15 @@ const ArticleCard = ({ article, onBuyClick }) => {
                 <p><b>Precio:</b> {article.price}€</p>
             </div>
             <button onClick={handleBuyClick}>Comprar</button>
-            {isModalOpen && (<ImageArticle
-                imageUrl={`data:image/jpeg;base64,${article.image}`}
-                onClose={() => setModalOpen(false)}
+            {selectedArticle  && (<ImageArticle
+                type = {article.type}
+                imageUrl = {`data:image/jpeg;base64,${article.image}`}
+                material = {article.material}
+                finish = {article.finish}
+                dimensions = {article.dimensions}
+                details = {article.details}
+                price = {article.price}
+                onClose={handleCloseModal}
                 />
             )}
         </div>
