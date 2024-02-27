@@ -41,14 +41,9 @@ const home = [{
 
 const shop = [
   {
-    name: "Sign In",
-    href: "/signin",
-    icon: ""
-  },
-  {
-    name: "Log In",
+    name: "",
     href: "/login",
-    icon: ""
+    icon: "../assets/login.png"
   },
   {
     name: "",
