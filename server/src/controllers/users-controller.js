@@ -20,7 +20,6 @@ export async function createUserController(req, res, next){
     body.password = await encryptPassword(body.password);
     const users = await createUser(req.body);
     return res.status(201).send(users);
-    logger.info('Usuario creado con exito');
 
   } catch (error) {
     logger.error('Problemas al crear un usuario');

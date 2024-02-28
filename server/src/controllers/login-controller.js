@@ -18,8 +18,9 @@ export async function login(req, res, next){
         const userInfo = { id: user.id, name: user.name };
         const jwtConfig = { expiresIn: 10 };
         const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig);
+        const userId = user.id;
 
-        return res.send({ token });
+        return res.status(200).send({ token, userId });
       }
     }
 

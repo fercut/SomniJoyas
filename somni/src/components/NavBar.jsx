@@ -43,7 +43,7 @@ const shop = [
   {
     name: "",
     href: "/login",
-    icon: "../assets/login.png"
+    icon: "../../imagenes/iconos/login.png"
   },
   {
     name: "",

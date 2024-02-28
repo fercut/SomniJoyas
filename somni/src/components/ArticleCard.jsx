@@ -5,9 +5,56 @@ import '../style/ArticleCard.css'
 const ArticleCard = ({ article, onBuyClick }) => {
     const [selectedArticle, setSelectedArticle] = useState(null)
 
-    const handleBuyClick = () => {
-        // Lógica para comprar el artículo
-        onBuyClick(article._id.$oid);
+    const handleBuyClick = async () => {
+      try {
+        // Realizar la solicitud al backend para agregar el artículo al carrito
+        const userId = sessionStorage.getItem('userId');
+
+        if (!userId) {
+          console.error('UserId no encontrado en sessionStorage');
+          return;
+        }
+
+        // Asegurarse de que article._id tenga un valor
+        if (!article._id) {
+          console.error('El artículo no tiene un ID definido');
+          return;
+        }
+
+        const response = await fetch(`http://localhost:3000/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+          body: JSON.stringify({
+            $push: {
+                cart: {
+                    itemId: article._id,
+                    quantity: 1,
+                }
+            }
+        }),
+          
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Lógica adicional si es necesario después de agregar al carrito
+
+          // Cerrar el modal si es necesario
+          setSelectedArticle(null);
+
+          // Llamar a la función onBuyClick con el id del artículo
+          onBuyClick(article._id);
+        } else {
+          // Manejar el caso de error al agregar al carrito
+          console.error('Error al agregar al carrito:', data.error);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
     };
 
     const handleImageClick = () => {

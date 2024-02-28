@@ -27,6 +27,7 @@ nav{
 .shop .nav-link{
     font-size: 15px;
     position: relative;
+    margin: 10px;
     transition: color 0.3s ease;
 }
 

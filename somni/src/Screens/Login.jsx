@@ -31,6 +31,7 @@ const Login = ({ onLogin }) => {
       if (response.ok) {
         // Almacenar el token en sessionStorage
         sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('userId', data.userId);
 
         // Actualizar el estado loggedIn
         setLoggedIn(true);
@@ -45,10 +46,6 @@ const Login = ({ onLogin }) => {
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
-  };
-
-  const handleNavigateToSignin = () => {
-    return <Navigate to="/signin" />;
   };
 
   if (loggedIn) {
