@@ -1,7 +1,7 @@
 import { createUser, getUsers } from '../services/database/user-db-service.js';
 import { encryptPassword } from '../utils/encrypt.js';
 import { User } from '../models/index.js';
-import { getUserByEmail } from '../services/database/user-db-service.js';
+import { getUserById } from '../services/database/user-db-service.js';
 import logger from '../utils/logger.js';
 
 
@@ -34,10 +34,16 @@ export async function createUserController(req, res, next){
 }
 
 export async function getUserMe(req, res, next){
-  try{
-    const user = await getUserByEmail(req.user.email);
-    return res.send(user);
-  }catch(error) {
+  try {
+    const userId = req.user.id; // Obtén el ID del usuario desde el token
+    const user = await getUserById(userId);
+
+    if (user) {
+      return res.send(user);
+    } else {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  } catch (error) {
     next(error);
   }
 }

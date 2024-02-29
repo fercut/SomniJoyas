@@ -10,6 +10,16 @@ export async function getArticleController(req,res,next){
   }
 }
 
+export async function getArticleByIDController(req,res,next){
+  try {
+    const article = await Articles.findById(req.params.id);
+    return res.json(article);
+  } catch (error){
+    next(error);
+  }
+}
+
+
 export async function createArticleController(req, res, next){
   try{
     const body = req.body;

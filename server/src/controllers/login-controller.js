@@ -15,8 +15,8 @@ export async function login(req, res, next){
       const isPasswordValid = await checkHash(password, user.password);
 
       if (isPasswordValid) {
-        const userInfo = { id: user.id, name: user.name };
-        const jwtConfig = { expiresIn: 10 };
+        const userInfo = { id: user.id, name: user.name, email: user.email };
+        const jwtConfig = { expiresIn: '24h' };
         const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig);
         const userId = user.id;
 

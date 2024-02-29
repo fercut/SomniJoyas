@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import { 
             getArticleController,
+            getArticleByIDController,
             createArticleController, 
             updateArticleController, 
             deleteArticleController,
@@ -16,6 +17,7 @@ import {
 const router = Router();
 
 router.get('/', getArticleController);
+router.get('/:id',getArticleByIDController)
 router.post('/', createArticleController);
 router.patch('/:id', updateArticleController);
 router.delete('/:id', deleteArticleController);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CartCard from '../components/CartCard';
 
 const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -17,7 +18,7 @@ const ShoppingCart = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/cart', {
+        const response = await fetch('http://localhost:3000/users/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -26,8 +27,16 @@ const ShoppingCart = () => {
         const data = await response.json();
 
         if (response.ok) {
-          // Actualizar el estado con los artículos del carrito
-          setCartItems(data.cart);
+          // Obtener detalles adicionales para cada artículo en el carrito
+          const cartWithDetails = await Promise.all(
+            data.cart.map(async (item) => {
+              const articleDetails = await fetchArticleDetails(item.itemId);
+              return { ...item, ...articleDetails };
+            })
+          );
+
+          // Actualizar el estado con los artículos del carrito del usuario con detalles
+          setCartItems(cartWithDetails);
         } else {
           // Manejar el caso de error al obtener el carrito
           console.error('Error al obtener el carrito:', data.message);
@@ -37,21 +46,130 @@ const ShoppingCart = () => {
       }
     };
 
+    const fetchArticleDetails = async (articleId) => {
+      try {
+        const response = await fetch(`http://localhost:3000/articles/${articleId}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          return { type: data.type, image: data.image }; // Ajusta según la estructura de tu artículo
+        } else {
+          console.error('Error al obtener detalles del artículo:', data.message);
+          return {};
+        }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+        return {};
+      }
+    };
+
     fetchCart();
   }, [navigate]);
 
+  const handleIncrease = async (itemId) => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/users/${itemId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ action: 'increase' }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Actualizar el estado con los artículos del carrito después de aumentar la cantidad
+        setCartItems((prevCart) =>
+          prevCart.map((item) =>
+            item.itemId === itemId
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        );
+      } else {
+        // Manejar el caso de error al aumentar la cantidad
+        console.error('Error al aumentar la cantidad:', data.message);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+  
+  const handleDecrease = async (itemId) => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/users/${itemId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ action: 'decrease' }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Actualizar el estado con los artículos del carrito después de disminuir la cantidad
+        setCartItems((prevCart) =>
+          prevCart.map((item) =>
+            item.itemId === itemId
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          )
+        );
+      } else {
+        // Manejar el caso de error al disminuir la cantidad
+        console.error('Error al disminuir la cantidad:', data.message);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+  
+  const handleDelete = async (itemId) => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/users/${itemId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ action: 'delete' }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Actualizar el estado con los artículos del carrito después de eliminar un artículo
+        setCartItems((prevCart) => prevCart.filter((item) => item.itemId !== itemId));
+      } else {
+        // Manejar el caso de error al eliminar el artículo
+        console.error('Error al eliminar el artículo:', data.message);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+
   return (
     <div>
-      <h2>Carrito de Compras</h2>
       {cartItems.length > 0 ? (
-        <ul>
+        <div>
           {cartItems.map((item) => (
-            <li key={item.itemId}>
-              <p>Artículo ID: {item.itemId}</p>
-              <p>Cantidad: {item.quantity}</p>
-            </li>
+            <CartCard
+              key={item.itemId}
+              cartItem={item}
+              onIncrease={() => handleIncrease(item.itemId)}
+              onDecrease={() => handleDecrease(item.itemId)}
+              onDelete={() => handleDelete(item.itemId)}
+            />
           ))}
-        </ul>
+        </div>
       ) : (
         <p>No hay artículos en el carrito en este momento.</p>
       )}
