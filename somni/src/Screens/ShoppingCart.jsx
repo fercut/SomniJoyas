@@ -7,6 +7,7 @@ const ShoppingCart = () => {
   const navigate = useNavigate();
   const userId = sessionStorage.getItem('userId');
   const token = sessionStorage.getItem('token');
+  const [totalPrice, setTotalPrice] = useState(0);
   const [userData, setUserData] = useState({
     name: '',
     lastname: '',
@@ -16,7 +17,20 @@ const ShoppingCart = () => {
     location: '',
     city: '',
     postalCode: '',
+    quantity: '',
   });
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      let total = 0;
+      cartItems.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+      setTotalPrice(total);
+    };
+  
+    calculateTotalPrice();
+  }, [cartItems]);
 
 
   useEffect(() => {
@@ -51,6 +65,7 @@ const ShoppingCart = () => {
             location: data.location,
             city: data.city,
             postalCode: data.postalCode,
+            quantity: data.cart.quantity,
           });
 
           const cartWithDetails = await Promise.all(
@@ -77,7 +92,7 @@ const ShoppingCart = () => {
         const data = await response.json();
 
         if (response.ok) {
-          return { type: data.type, image: data.image, details: data.details}; // Ajusta según la estructura de tu artículo
+          return { type: data.type, image: data.image, details: data.details, price: data.price}; // Ajusta según la estructura de tu artículo
         } else {
           console.error('Error al obtener detalles del artículo:', data.message);
           return {};
@@ -178,13 +193,17 @@ const ShoppingCart = () => {
     }
   };
 
+  const handleOrder = async () => {
+
+  }
+
   return (
     <div className='shopping'>
       {cartItems.length > 0 ? (
         <div>
-          {cartItems.map((item) => (
+          {cartItems.map((item, index) => (
             <CartCard
-              key={item.itemId}
+              key={index}
               cartItem={item}
               onIncrease={() => handleIncrease(item.itemId)}
               onDecrease={() => handleDecrease(item.itemId)}
@@ -198,14 +217,14 @@ const ShoppingCart = () => {
   
       {cartItems.length > 0 && (
         <div className='userData'>
-          <h3>Facturación:</h3>
+          <h1>Precio total del pedido: {totalPrice}€</h1>
+          <h3>Datos de envio:</h3>
           <p><b>Nombre:</b> {userData.name} {userData.lastname}</p>
-          <p><b>Email:</b> {userData.email}</p>
           <p><b>Teléfono:</b> {userData.phone}</p>
           <p><b>Dirección:</b> {userData.adress}</p>
           <p><b>Localidad / Ciudad:</b> {userData.location} / {userData.city}</p>
           <p><b>Código postal:</b> {userData.postalCode}</p>
-          <button>Tramitar pedido</button>
+          <button onClick={handleOrder}>Tramitar pedido</button>
         </div>
       )}
     </div>

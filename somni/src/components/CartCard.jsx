@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../style/CartCard.css'
 
 const CartCard = ({ cartItem, onIncrease, onDecrease, onDelete }) => {
-  const { itemId, quantity, image, type, details } = cartItem;
+  const { itemId, quantity, image, type, details, price } = cartItem;
   
   const handleIncreaseClick = () => {
     onIncrease(itemId);
@@ -32,6 +32,7 @@ const CartCard = ({ cartItem, onIncrease, onDecrease, onDelete }) => {
       <div className="cart-details">
         <p><b>Artículo:</b> {capitalizeFirstLetter(type)}</p>
         <p><b>Detalle:</b> {details}</p>
+        <p><b>Precio:</b> {price}€</p>
       </div>
       <div className="cart-buttons">
         <button onClick={handleIncreaseClick}>+</button>

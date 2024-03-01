@@ -28,6 +28,7 @@
     flex-direction: column;
     justify-content: center;
     margin: 20px;
+    width: 200px;
 }
 
 .cart-buttons {
