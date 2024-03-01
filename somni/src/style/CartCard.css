@@ -1,0 +1,22 @@
+.cart-card {
+    background-color: rgb(0, 0, 0, 0.2);
+    border-radius: 15px;
+    width: 50%;
+    display: flex;
+    margin: 20px;
+}
+
+.cart-card>img {
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.quantity {
+    background-color: white;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+}

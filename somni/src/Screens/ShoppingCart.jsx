@@ -49,11 +49,11 @@ const ShoppingCart = () => {
 
     const fetchArticleDetails = async (articleId) => {
       try {
-        const response = await fetch(`http://localhost:3000/articles/${articleId}`);
+        const response = await fetch(`http://localhost:3000/articles/get/${articleId}`);
         const data = await response.json();
 
         if (response.ok) {
-          return { type: data.type, image: data.image }; // Ajusta según la estructura de tu artículo
+          return { type: data.type, image: data.image, details: data.details}; // Ajusta según la estructura de tu artículo
         } else {
           console.error('Error al obtener detalles del artículo:', data.message);
           return {};

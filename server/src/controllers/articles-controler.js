@@ -58,10 +58,11 @@ export const deleteArticleController = async (req, res) => {
 export async function getRingsController(req, res, next) {
   try {
     const rings = await Articles.find({ type: 'anillo' });
-    res.status(200).json(rings);
+    return res.status(200).json(rings);
   } catch (error) {
     console.error('Error al obtener los anillos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
 
@@ -72,6 +73,7 @@ export async function getBraceletsController(req, res, next) {
   } catch (error) {
     console.error('Error al obtener las pulseras:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
 
@@ -82,6 +84,7 @@ export async function getChokerController(req, res, next) {
   } catch (error) {
     console.error('Error al obtener las gargantillas:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
 
@@ -92,6 +95,7 @@ export async function getEarringsController(req, res, next) {
   } catch (error) {
     console.error('Error al obtener los pendientes:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
 
@@ -102,6 +106,7 @@ export async function getChainsController(req, res, next) {
   } catch (error) {
     console.error('Error al obtener las cadenas:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
 
@@ -112,6 +117,7 @@ export async function getPendantsController(req, res, next) {
   } catch (error) {
     console.error('Error al obtener los colgantes:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
 
@@ -126,5 +132,6 @@ export async function getSearchController(req, res, next) {
   } catch (error) {
     console.error('Error al realizar la búsqueda:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
   }
 }
