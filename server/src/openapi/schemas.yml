@@ -1,0 +1,78 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: object
+          properties:
+            $oid:
+              type: string
+          description: ID del usuario en formato MongoDB ObjectId
+        name:
+          type: string
+          description: Nombre del usuario
+        lastname:
+          type: string
+          description: Apellidos del usuario
+        email:
+          type: string
+          format: email
+          description: Dirección de correo electrónico del usuario
+        phone:
+          type: integer
+          description: Número de teléfono del usuario
+        adress:
+          type: string
+          description: Dirección del usuario
+        location:
+          type: string
+          description: Localidad del usuario
+        city:
+          type: string
+          description: Ciudad del usuario
+        postalCode:
+          type: integer
+          description: Código postal del usuario
+        password:
+          type: string
+          description: Contraseña del usuario (debe ser almacenada de forma segura)
+        cart:
+          type: array
+          items:
+            type: object
+            properties:
+              articleId:
+                type: object
+                properties:
+                  $oid:
+                    type: string
+                description: ID del artículo en formato MongoDB ObjectId
+              quantity:
+                type: integer
+                description: Cantidad del artículo en el carrito
+            required:
+              - articleId
+              - quantity
+          description: Carrito de compras del usuario
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha y hora de creación del usuario
+        updatedAt:
+          type: string
+          format: date-time
+          description: Fecha y hora de última actualización del usuario
+        __v:
+          type: integer
+          description: Versión de la base de datos
+      required:
+        - name
+        - lastname
+        - email
+        - phone
+        - adress
+        - location
+        - city
+        - postalCode
+        - password
