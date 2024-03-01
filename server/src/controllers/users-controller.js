@@ -48,10 +48,60 @@ export async function getUserMe(req, res, next){
   }
 }
 
-export async function updateUserController(req, res, next){
+export async function updateUserController(req, res, next) {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updatedUser);
+    const { action } = req.body;
+    const userId = req.params.id;
+
+    if (action === 'increase') {
+      // Acción para aumentar la cantidad
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: userId, 'cart.itemId': req.body.itemId },
+        { $inc: { 'cart.$.quantity': 1 } },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+
+      return res.status(200).json(updatedUser);
+    } else if (action === 'decrease') {
+      // Acción para disminuir la cantidad
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: userId, 'cart.itemId': req.body.itemId, 'cart.quantity': { $gt: 1 } },
+        { $inc: { 'cart.$.quantity': -1 } },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'Usuario no encontrado o cantidad ya en el mínimo' });
+      }
+
+      return res.status(200).json(updatedUser);
+    } else if (action === 'delete') {
+      // Acción para eliminar un artículo del carrito
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $pull: { cart: { itemId: req.body.itemId } } },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+
+      return res.status(200).json(updatedUser);
+    } else {
+      // Acción para actualizar el usuario sin cambios en el carrito
+      const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+
+      return res.status(200).json(updatedUser);
+    }
   } catch (error) {
     next(error);
   }

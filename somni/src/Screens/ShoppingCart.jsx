@@ -5,12 +5,13 @@ import CartCard from '../components/CartCard';
 const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
+  const userId = sessionStorage.getItem('userId');
+  const token = sessionStorage.getItem('token');
 
   useEffect(() => {
     // Obtener el carrito del usuario desde el backend
     const fetchCart = async () => {
-      const token = sessionStorage.getItem('token');
-
+      
       if (!token) {
         // Redirigir a la página de inicio de sesión si no hay un token
         navigate('/login');
@@ -68,14 +69,13 @@ const ShoppingCart = () => {
 
   const handleIncrease = async (itemId) => {
     try {
-      const token = sessionStorage.getItem('token');
-      const response = await fetch(`http://localhost:3000/users/${itemId}`, {
+      const response = await fetch(`http://localhost:3000/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ action: 'increase' }),
+        body: JSON.stringify({ itemId, action: 'increase' }),
       });
   
       const data = await response.json();
@@ -100,14 +100,13 @@ const ShoppingCart = () => {
   
   const handleDecrease = async (itemId) => {
     try {
-      const token = sessionStorage.getItem('token');
-      const response = await fetch(`http://localhost:3000/users/${itemId}`, {
+      const response = await fetch(`http://localhost:3000/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ action: 'decrease' }),
+        body: JSON.stringify({ itemId, action: 'decrease' }),
       });
   
       const data = await response.json();
@@ -132,14 +131,13 @@ const ShoppingCart = () => {
   
   const handleDelete = async (itemId) => {
     try {
-      const token = sessionStorage.getItem('token');
-      const response = await fetch(`http://localhost:3000/users/${itemId}`, {
+      const response = await fetch(`http://localhost:3000/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ action: 'delete' }),
+        body: JSON.stringify({ itemId, action: 'delete' }),
       });
   
       const data = await response.json();
