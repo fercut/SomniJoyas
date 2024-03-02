@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CartCard from '../components/CartCard';
 import Alert from '../components/Alert';
-import '../style/ShoppingCart.css'
+import '../style/ShoppingCart.css';
+import tarjeta from '../../imagenes/visa.png';
+import paquete from '../../imagenes/paquete.png';
 
 const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -26,6 +28,8 @@ const ShoppingCart = () => {
     content: '',
     showAlert: false,
   });
+
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     const calculateTotalPrice = () => {
@@ -200,8 +204,28 @@ const ShoppingCart = () => {
     }
   };
 
+  const handleOptionChange = (option) => {
+    if (selectedOption === option) {
+      // Si ya está seleccionado, deseleccionar
+      setSelectedOption(null);
+    } else {
+      // Si no está seleccionado, seleccionar
+      setSelectedOption(option);
+    }
+  };
+
   const handleOrder = async () => {
     try {
+
+      if (selectedOption === null) {
+        setAlert({
+          title: 'Importante',
+          content: 'Por favor indique un metodo de pago',
+          showAlert: true,
+        });
+        return;
+      }
+
       const response = await fetch('http://localhost:3000/orders/', {
         method: 'POST',
         headers: {
@@ -289,6 +313,28 @@ const ShoppingCart = () => {
           <p><b>Dirección:</b> {userData.adress}</p>
           <p><b>Localidad / Ciudad:</b> {userData.location} / {userData.city}</p>
           <p><b>Código postal:</b> {userData.postalCode}</p>
+          <h3>Metodo de pago:</h3>
+          <label className={selectedOption === 'Tarjeta' ? 'selected' : ''}>
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="Tarjeta"
+              onChange={() => handleOptionChange('Tarjeta')}
+            />
+            Tarjeta
+            <img src={tarjeta} width={30} alt="tarjeta" />
+          </label>
+
+          <label className={selectedOption === 'Contrarreembolso' ? 'selected' : ''}>
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="Contrarreembolso"
+              onChange={() => handleOptionChange('Contrarreembolso')}
+            />
+            Contrarreembolso
+            <img src={paquete} width={30} alt="paquete" />
+          </label>
           <button onClick={handleOrder}>Tramitar pedido</button>
         </div>
       )}

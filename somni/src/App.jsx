@@ -12,6 +12,7 @@ import Contact from './Screens/Contact';
 import ShoppingCart from './Screens/ShoppingCart';
 import Signin from './Screens/Signin';
 import Login from './Screens/Login';
+import User from './Screens/User';
 import './style/App.css';
 
 const App = () => {
@@ -40,7 +41,8 @@ const App = () => {
           <Route path="shoppingCart" element={<ShoppingCart />} />
           <Route path="contact" element={<Contact />} />
           <Route path="signin" element={<Signin />} />
-          <Route path="login" element={token ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
+          <Route path="user" element={<User />} />
+          <Route path="login" element={token ? <Navigate to="/user" /> : <Login onLogin={handleLogin} />} />
         </Routes>
       </div>
     </Router>

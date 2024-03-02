@@ -2,7 +2,7 @@ import { User } from "../../models/index.js";
 
 export async function getUserByEmail(email) {
   try {
-    const user = await User.findOne({email}).populate('cart.itemId');
+    const user = await User.findOne({email});
     return user;
   } catch (error) {
     throw new Error('Error al obtener el usuario por email');
