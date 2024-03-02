@@ -3,7 +3,12 @@ import ImageArticle from './ImageArticle';
 import '../style/ArticleCard.css'
 
 const ArticleCard = ({ article, onBuyClick }) => {
-    const [selectedArticle, setSelectedArticle] = useState(null)
+    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [cartItems, setCartItems] = useState([]);
+
+    const isArticleInCart = (articleId) => {
+      return cartItems.some((item) => item.itemId === articleId);
+    };
 
     const handleBuyClick = async () => {
       try {
@@ -18,6 +23,11 @@ const ArticleCard = ({ article, onBuyClick }) => {
         // Asegurarse de que article._id tenga un valor
         if (!article._id) {
           console.error('El artículo no tiene un ID definido');
+          return;
+        }
+
+        if (isArticleInCart(article._id)) {
+          console.log('El artículo ya está en el carrito.');
           return;
         }
 

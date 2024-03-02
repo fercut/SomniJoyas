@@ -1,0 +1,18 @@
+.shopping-cart {
+  display: flex;
+}
+
+.cart-container {
+  width: 40%;
+  margin-right: 15%;
+}
+
+.userData {
+  display: flex;
+  flex-direction: column;
+}
+
+.userData button {
+  margin-top: 10px;
+  align-self: center;
+}
