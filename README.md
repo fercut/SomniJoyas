@@ -5,11 +5,12 @@
 
 ---
 ## React  Node MongoDB
-<div style='display:flex'>
-<img src="./Documentacion/react.gif" alt="react" width="250">
-<img src="./Documentacion/node.png" alt="react" width="250">
-<img src="./Documentacion/mongodb.png" alt="react" width="250">
+<div style='display: flex; gap: 10px;'>
+  <img src="./Documentacion/react.gif" alt="react" width="100">
+  <img src="./Documentacion/node.png" alt="node" width="100">
+  <img src="./Documentacion/mongodb.png" alt="mongodb" width="100">
 </div>
+
 <br/>
 
 </center>
