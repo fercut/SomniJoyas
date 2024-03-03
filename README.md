@@ -4,11 +4,12 @@
 # SPRINT 4
 
 ---
-## React  Node MongoDB 
+## React  Node MongoDB
+<div style='display:flex'>
 <img src="./Documentacion/react.gif" alt="react" width="250">
 <img src="./Documentacion/node.png" alt="react" width="250">
 <img src="./Documentacion/mongodb.png" alt="react" width="250">
-
+</div>
 <br/>
 
 </center>
