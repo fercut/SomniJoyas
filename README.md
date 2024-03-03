@@ -22,9 +22,9 @@
 ---
 </center>
 
->En esta tarea, abordaremos el desarrollo del componente 'ShoppingCart' que permitira al usuario, previamente logueado,
-seleccionar articulos y que estos se añadan al carrito. Una vez añadido los articulos y que sean visibles en la cesta, estos se podran modificar de forma que se puedan modificar las cantidades del articulo y eliminar el articulo del carrito.
-El componente 'ShoppingCart' , aparte de los articulos, tambien mostrara el valor total de la compra, los datos del cliente para el envio y la posibilidad de seleccionar un metodo de pago. Una vez tramitado el pedido el carrito quedara vacio y se generara una orden con los datos del pedido realizado que sera visible desde el perfil del usuario.
+>En esta tarea, nos enfocaremos en el desarrollo del componente 'ShoppingCart', el cual permitirá al usuario, previamente logueado, seleccionar artículos y añadirlos al carrito. Una vez que los artículos estén agregados y sean visibles en la cesta, será posible modificar tanto las cantidades como eliminar los artículos del carrito.
+El componente 'ShoppingCart', además de mostrar los artículos, también exhibirá el valor total de la compra, los datos del cliente para el envío y la opción de seleccionar un método de pago. Una vez que se haya completado el pedido, el carrito quedará vacío y se generará una orden con los detalles de la compra. Esta orden será visible desde el perfil del usuario.
+
 <br/>
 <center>
 
@@ -32,7 +32,8 @@ El componente 'ShoppingCart' , aparte de los articulos, tambien mostrara el valo
 ---
 </center>
 
->Para
+>Para afrontar este SPRINT, he implementado el backend con Node.js y Express para facilitar la carga de artículos desde la base de datos. Asimismo, he trabajado en la manipulación de la base de datos (MongoDB) para asegurar que contenga información relevante para ser mostrada en el frontend. En cuanto al frontend, he desarrollado una interfaz dinámica con React, diseñada para ofrecer una experiencia intuitiva en la aplicación web. El objetivo principal ha sido presentar la información de manera clara y ordenada, garantizando así una experiencia de usuario óptima.
+
 <br/>
 
 <center>
@@ -41,26 +42,13 @@ El componente 'ShoppingCart' , aparte de los articulos, tambien mostrara el valo
 ---
 </center>
 
->En este punto, detallaremos la implementación de cada ejercicio:
-
-    Ejercicio 1: Navegación con Parámetros de Ruta
-        Crear una aplicación simple de perfiles de usuario que utilice React Router para 
-        la navegación, donde cada perfil tenga su propia URL basada en el ID del usuario.
-
-    Ejercicio 2: Gestión de Formularios y Validaciones con React Hook Form
-        Crear un formulario de contacto simple que valide la entrada del usuario antes 
-        de mostrar un mensaje de éxito, utilizando React Hook Form.
-
-    Ejercicio 3: Buscador de Películas con API Externa
-        Crear una aplicación que permita a los usuarios buscar películas por nombre usando 
-        la API de OMDB (Open Movie   Database) y mostrar los resultados en la página.
-
-    Ejercicio 4: Actualización de Perfil de Usuario con Autenticación
-        Crear una aplicación que permita a los usuarios registrarse, iniciar sesión y actualizar 
-        su perfil, incluyendo la carga de una imagen de perfil, interactuando con una API que 
-        requiere autenticación.
-
-Esta implementación se llevará a cabo de manera dinámica, y cada ejercicio será sometido a pruebas exhaustivas para garantizar su correcto funcionamiento y la satisfacción de los requerimientos específicos de cada uno. El proceso completo se mostrará en un video que incluirá un plan de pruebas detallado.
+>Verificaremos el funcionamiento del carrito (ShoppingCart) de la siguiente manera: estando en la ruta '/home' de nuestra web, al hacer clic en el icono del carrito, se nos indicará que debemos iniciar sesión previamente. Una vez iniciada la sesión, podremos añadir artículos al carrito. Al navegar hacia el carrito, se mostrará un mensaje indicando que no hay artículos en él si el usuario no tiene elementos en la propiedad 'cart' de la base de datos, de donde extraeremos la información para mostrarla en el carrito.
+>
+>Una vez que hemos cargado al menos un artículo en el carrito y navegamos hacia él, debería presentarnos los artículos previamente agregados, ofreciendo opciones para modificar la cantidad de los mismos o eliminarlos. Además, mostrará el precio total del pedido, el método de pago seleccionado y la opción para tramitar el pedido.
+>
+>Si intentamos tramitar el pedido sin seleccionar un método de pago, se mostrará una advertencia recordándonos que debemos elegir una opción de pago. Una vez seleccionado, al hacer clic en "Tramitar pedido", se creará una orden para el envío al cliente, y el usuario podrá visualizar el pedido realizado en su perfil.
+>
+>Todo este proceso será documentado en un plan de pruebas, respaldado por un video para cada prueba, permitiendo así la visualización del correcto funcionamiento del carrito.
 
 <br/>
 
@@ -70,21 +58,28 @@ Esta implementación se llevará a cabo de manera dinámica, y cada ejercicio se
 ---
 </center>
 
-#### Ejercicio 1:
+#### Test Login:
 
-<img src='./documentacion/ejercicio1test.png' width="100%">
-<img src='./documentacion/ejercicio1.gif' width="100%">
+<img src='./documentacion/testLogin.png' width="100%">
+<img src='./documentacion/testLogin.gif' width="100%">
 
-#### Ejercicio 2: 
+#### Test Añadir articulos en el carrito: 
 
-<img src='./documentacion/ejercicio2test.png' width="100%">
-<img src='./documentacion/ejercicio2.gif' width="100%">
+<img src='./documentacion/testAddArticles.png' width="100%">
+<img src='./documentacion/testAddArticles.gif' width="100%">
 
-#### Ejercicio 3:
-<img src='./documentacion/ejercicio3test.png' width="100%">
-<img src='./documentacion/ejercicio3.gif' width="100%">
+#### Test Modificar carrito:
+<img src='./documentacion/testUpdateCart.png' width="100%">
+<img src='./documentacion/testUpdateCart.gif' width="100%">
 
-#### Ejercicio 4:
+#### Test Tramitar pedido:
 
-<img src='./documentacion/ejercicio4test.png' width="100%">
-<img src='./documentacion/ejercicio4.gif' width="100%">
+<img src='./documentacion/testCheckout.png' width="100%">
+<img src='./documentacion/testCheckout.gif' width="100%">
+
+#### Test Orden creada:
+
+<img src='./documentacion/testCreateOrder.png' width="100%">
+<img src='./documentacion/testCreateOrder.gif' width="100%">
+
+## [Descarga el plan de pruebas](./Documentacion/PlanPruebasCarrito(Fermin).pdf)

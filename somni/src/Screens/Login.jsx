@@ -55,7 +55,7 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className='login'>
-      <h2>Iniciar Sesión</h2>
+      <h2>Iniciar sesión</h2>
       <input
         type="email"
         placeholder="Correo electrónico"
@@ -72,7 +72,7 @@ const Login = ({ onLogin }) => {
         onChange={(e) => setPassword(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleLogin}>Iniciar Sesión</button>
+      <button onClick={handleLogin}>Iniciar sesión</button>
       <button onClick={() => navigate('/signin')}>Registrate</button>
       {message && <Alert title="Error" content={message} onClose={() => setMessage(undefined)}/>}
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ImageArticle from './ImageArticle';
+import Alert from './Alert';
 import '../style/ArticleCard.css'
 
 const ArticleCard = ({ article, onBuyClick }) => {
@@ -32,7 +33,6 @@ const ArticleCard = ({ article, onBuyClick }) => {
       }
 
       if (isArticleInCart(article._id)) {
-        console.log('El artículo ya está en el carrito.');
         return;
       }
 
@@ -56,7 +56,17 @@ const ArticleCard = ({ article, onBuyClick }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Lógica adicional si es necesario después de agregar al carrito
+
+        setAlert({
+          title: 'Articulo añadido',
+          content: 'Articulo añadido correctamente a su cesta',
+          showAlert: true,
+        });
+        setTimeout(() => {
+          setAlert({
+            showAlert: false,
+          });
+        }, 1000);
 
         // Cerrar el modal si es necesario
         setSelectedArticle(null);

@@ -247,7 +247,7 @@ const ShoppingCart = () => {
 
         // Mostrar la alerta de pedido realizado con éxito
         setAlert({
-          title: 'Pedido Realizado',
+          title: 'Pedido realizado',
           content: '¡Gracias por tu compra!',
           showAlert: true,
         });
