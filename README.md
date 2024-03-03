@@ -61,30 +61,25 @@ El componente 'ShoppingCart', además de mostrar los artículos, también exhibi
 #### Test Login:
 
 <img src='./documentacion/testLogin.png' width="100%">
-
 <img src='./documentacion/testLogin.gif' width="100%">
 
 #### Test Añadir articulos en el carrito: 
 
 <img src='./documentacion/testAddArticles.png' width="100%">
-
 <img src='./documentacion/testAddArticles.gif' width="100%">
 
 #### Test Modificar carrito:
 <img src='./documentacion/testUpdateCart.png' width="100%">
-
 <img src='./documentacion/testUpdateCart.gif' width="100%">
 
 #### Test Tramitar pedido:
 
 <img src='./documentacion/testCheckout.png' width="100%">
-
 <img src='./documentacion/testCheckout.gif' width="100%">
 
 #### Test Orden creada:
 
 <img src='./documentacion/testCreateOrder.png' width="100%">
-
 <img src='./documentacion/testCreateOrder.gif' width="100%">
 
-## [Descarga el plan de pruebas](./Documentacion/PlanPruebasCarrito(Fermin).pdf)
+## [Descarga el plan de pruebas](./Documentacion/PlandepruebasCarrito(Fermin).pdf)
