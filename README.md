@@ -6,6 +6,8 @@
 ---
 ## React  Node MongoDB 
 <img src="./Documentacion/react.gif" alt="react" width="250">
+<img src="./Documentacion/node.png" alt="react" width="250">
+<img src="./Documentacion/mongodb.png" alt="react" width="250">
 
 <br/>
 
@@ -18,7 +20,9 @@
 ---
 </center>
 
->En esta tarea, abordaremos cuatro ejercicios de manera dinámica. Cada ejercicio será sometido a pruebas exhaustivas que se detallarán en el último punto del informe. Se presentará un video que demostrará la ejecución de los ejercicios y se proporcionará un plan de pruebas detallado para evaluar la funcionalidad y robustez de cada solución. Este enfoque garantizará una comprensión completa y una evaluación rigurosa de cada ejercicio.
+>En esta tarea, abordaremos el desarrollo del componente 'ShoppingCart' que permitira al usuario, previamente logueado,
+seleccionar articulos y que estos se añadan al carrito. Una vez añadido los articulos y que sean visibles en la cesta, estos se podran modificar de forma que se puedan modificar las cantidades del articulo y eliminar el articulo del carrito.
+El componente 'ShoppingCart' , aparte de los articulos, tambien mostrara el valor total de la compra, los datos del cliente para el envio y la posibilidad de seleccionar un metodo de pago. Una vez tramitado el pedido el carrito quedara vacio y se generara una orden con los datos del pedido realizado que sera visible desde el perfil del usuario.
 <br/>
 <center>
 
@@ -26,14 +30,7 @@
 ---
 </center>
 
->Para cada uno de los cuatro ejercicios, generaremos un proyecto React utilizando el comando "npx create-react-app ejercicioX". A continuación, configuraremos la estructura de carpetas añadiendo las rutas components, resources, 
-assets, etc para organizar los elementos de manera clara. 
->
->Dentro de la carpeta components, crearemos los componentes necesarios para cada ejercicio con la extencion ".jsx". Cada componente será exportado desde su respectivo archivo para facilitar la importación en otros componentes o en la propia App. 
->
->En el archivo App.js, importaremos y utilizarémos los componentes necesarios para cada ejercicio.
->
->Este enfoque modular y organizado nos permitirá mantener un código limpio y fácil de mantener a medida que avanzamos en cada ejercicio del proyecto.
+>Para
 <br/>
 
 <center>
