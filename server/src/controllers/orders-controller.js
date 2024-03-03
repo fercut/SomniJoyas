@@ -47,19 +47,13 @@ export const deleteOrderController = async (req, res) => {
 
 export async function getOrdersByIdController(req, res, next) {
   try {
-    const userId = req.params.id;
-
-    const orders = await Orders.find({ user: userId })
-      .populate('user', 'name lastname') 
-      .populate('article', 'type price'); 
-
-    if (orders.length === 0) {
-      return res.status(404).json({ message: 'No se encontraron órdenes para este usuario.' });
-    }
-
+    const userId = req.params.userId;
+    const orders = await Orders.find({ user: userId }); 
     res.status(200).json({ orders });
+
   } catch (error) {
     console.error('Error al obtener las órdenes:', error);
     res.status(500).json({ message: 'Error interno del servidor.' });
+    next(error);
   }
 }
