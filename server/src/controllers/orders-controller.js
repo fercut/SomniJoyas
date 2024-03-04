@@ -3,7 +3,7 @@ import { Orders } from '../models/index.js';
 
 export async function getOrdersController(req,res,next){
   try {
-    const orders = await getOrders(req.query);
+    const orders = await getOrders(req.query, req.user);
     return res.json(orders);
   } catch (error){
     next(error);
@@ -48,7 +48,7 @@ export const deleteOrderController = async (req, res) => {
 export async function getOrdersByIdController(req, res, next) {
   try {
     const userId = req.params.userId;
-    const orders = await Orders.find({ user: userId }); 
+    const orders = await Orders.find({ user: userId });
     res.status(200).json({ orders });
 
   } catch (error) {

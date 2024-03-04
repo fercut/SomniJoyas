@@ -22,7 +22,7 @@ export async function getArticleByIDController(req,res,next){
 export async function createArticleController(req, res, next){
   try{
     const body = req.body;
-    const articles = await createArticle(req.body);
+    const articles = await createArticle(body);
     return res.status(201).send(articles);
   } catch (error) {
 

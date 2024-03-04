@@ -15,5 +15,9 @@ export async function createArticle(article){
   } catch (error) {
     logger.info('Articulo no creado, revise bien los campos')
   }
-  
 }
+
+export async function getArticlesResume(params) {
+    // TODO Get first 5-10 items for each type
+}
+

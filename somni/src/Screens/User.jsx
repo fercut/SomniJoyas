@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../style/User.css'
 
 const User = () => {
+    const token = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('userId');
     const [orders, setOrders] = useState([]);
     const [userData, setUserData] = useState({
         name: '',
@@ -19,8 +21,6 @@ const User = () => {
     useEffect(() => {
         // Obtener los datos del usuario desde el backend usando el userId de sessionStorage
         const fetchUserData = async () => {
-            const token = sessionStorage.getItem('token');
-            const userId = sessionStorage.getItem('userId');
 
             if (!userId || !token) {
                 // Redirigir a la página de inicio de sesión si no hay userId o token
@@ -65,6 +65,7 @@ const User = () => {
             try {
                 const response = await fetch(`http://localhost:3000/orders/order/${userId}`, {
                     headers: {
+                        Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });

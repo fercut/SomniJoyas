@@ -2,6 +2,7 @@ import { Orders } from "../../models/index.js";
 import logger from "../../utils/logger.js";
 
 export async function getOrders(filters){
+  // TODO add filters
   const articles = await Orders.find();
   return articles;
 }
