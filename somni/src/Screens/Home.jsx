@@ -9,7 +9,6 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    // Hacer la solicitud GET al backend para obtener la lista de artículos
     fetch('http://localhost:3000/articles')
       .then((response) => response.json())
       .then((data) => setArticles(data))
@@ -18,9 +17,7 @@ const Home = () => {
 
   const handleSearch = (searchTerm) => {
     console.log('Realizar búsqueda con término:', searchTerm);
-
-    // Hacer la solicitud al backend con el término de búsqueda
-    fetch(`http://localhost:3000/search/${searchTerm}`)
+    fetch(`http://localhost:3000/articles/search/${searchTerm}`)
       .then((response) => response.json())
       .then((data) => setSearchResults(data))
       .catch((error) => console.error('Error al realizar la búsqueda:', error));

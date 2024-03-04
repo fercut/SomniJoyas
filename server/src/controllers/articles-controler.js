@@ -19,7 +19,6 @@ export async function getArticleByIDController(req,res,next){
   }
 }
 
-
 export async function createArticleController(req, res, next){
   try{
     const body = req.body;
@@ -123,12 +122,18 @@ export async function getPendantsController(req, res, next) {
 
 export async function getSearchController(req, res, next) {
   try {
-    const searchTerm = req.params.filtro; 
+    const searchTerm = req.params.filtro;
 
-    const searchResults = await Articles.find();
+    const searchResults = await Articles.find({
+      $or: [
+        { type: { $regex: searchTerm, $options: 'i' } },
+        { material: { $regex: searchTerm, $options: 'i' } },
+        { details: { $regex: searchTerm, $options: 'i' } }
+      ]
+    });
 
     res.status(200).json(searchResults);
-    
+
   } catch (error) {
     console.error('Error al realizar la búsqueda:', error);
     res.status(500).json({ error: 'Error interno del servidor' });

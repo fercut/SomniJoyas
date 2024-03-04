@@ -1,9 +1,9 @@
 import {Router} from 'express';
-import { 
+import {
             getArticleController,
             getArticleByIDController,
-            createArticleController, 
-            updateArticleController, 
+            createArticleController,
+            updateArticleController,
             deleteArticleController,
             getRingsController,
             getBraceletsController,
@@ -16,6 +16,7 @@ import {
 
 const router = Router();
 
+// CRUD
 router.get('/', getArticleController);
 router.get('/get/:id',getArticleByIDController);
 router.post('/', createArticleController);
