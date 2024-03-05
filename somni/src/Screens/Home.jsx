@@ -7,6 +7,7 @@ import '../style/App.css';
 const Home = () => {
   const [articles, setArticles] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [isSearchEmpty, setIsSearchEmpty] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:3000/articles')
@@ -16,26 +17,34 @@ const Home = () => {
   }, []);
 
   const handleSearch = (searchTerm) => {
-    console.log('Realizar búsqueda con término:', searchTerm);
-    fetch(`http://localhost:3000/articles/search/${searchTerm}`)
-      .then((response) => response.json())
-      .then((data) => setSearchResults(data))
-      .catch((error) => console.error('Error al realizar la búsqueda:', error));
+    setIsSearchEmpty(searchTerm === '');
+
+    if (searchTerm === '') {
+      setSearchResults([]);
+    } else {
+      // Realiza la búsqueda solo si la barra de búsqueda no está vacía
+      fetch(`http://localhost:3000/articles/search/${searchTerm}`)
+        .then((response) => response.json())
+        .then((data) => setSearchResults(data))
+        .catch((error) => console.error('Error al realizar la búsqueda:', error));
+    }
   };
 
   return (
-    <div>
-      <Search onSearch={handleSearch} />
+    <div className='home'>
+      <div className="search-container">
+        <Search onSearch={handleSearch} />
+      </div>
       <h2>ULTIMAS NOVEDADES</h2>
       <div className='list-articles'>
-        {searchResults.length > 0 ? (
-          <ArticlesList articles={searchResults} />
-        ) : (
+        {isSearchEmpty ? (
           articles.length > 0 ? (
             <ArticlesList articles={articles} />
           ) : (
-            <img src={loadGif} alt="load" width={100}/>
+            <img src={loadGif} alt="load" width={100} />
           )
+        ) : (
+          <ArticlesList articles={searchResults} />
         )}
       </div>
     </div>

@@ -4,7 +4,7 @@ import Alert from './Alert';
 import '../style/ArticleCard.css'
 
 const ArticleCard = ({ article, onBuyClick }) => {
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [alert, setAlert] = useState({
     title: '',
@@ -18,7 +18,6 @@ const ArticleCard = ({ article, onBuyClick }) => {
 
   const handleBuyClick = async () => {
     try {
-      // Realizar la solicitud al backend para agregar el artículo al carrito
       const userId = sessionStorage.getItem('userId');
 
       if (!userId) {
@@ -26,7 +25,6 @@ const ArticleCard = ({ article, onBuyClick }) => {
         return;
       }
 
-      // Asegurarse de que article._id tenga un valor
       if (!article._id) {
         console.error('El artículo no tiene un ID definido');
         return;
@@ -67,14 +65,9 @@ const ArticleCard = ({ article, onBuyClick }) => {
             showAlert: false,
           });
         }, 1000);
-
-        // Cerrar el modal si es necesario
-        setSelectedArticle(null);
-
-        // Llamar a la función onBuyClick con el id del artículo
+        setIsModalOpen(false);
         onBuyClick(article._id);
       } else {
-        // Manejar el caso de error al agregar al carrito
         console.error('Error al agregar al carrito:', data.error);
       }
     } catch (error) {
@@ -83,11 +76,11 @@ const ArticleCard = ({ article, onBuyClick }) => {
   };
 
   const handleImageClick = () => {
-    setSelectedArticle(article);
-  };
+    setIsModalOpen(true);
+  }
 
   const handleCloseModal = () => {
-    setSelectedArticle(null);
+    setIsModalOpen(false);
   };
 
   const capitalizeFirstLetter = (word) => {
@@ -109,7 +102,7 @@ const ArticleCard = ({ article, onBuyClick }) => {
         alt={article.type}
         className="article-image"
         width={'200px'}
-        onClick={handleImageClick}
+        onClick = {() => !isModalOpen && handleImageClick()}
       />
       <div className="details">
         <p><b>Material:</b> {capitalizeFirstLetter(article.material)}</p>
@@ -119,7 +112,7 @@ const ArticleCard = ({ article, onBuyClick }) => {
         <p><b>Precio:</b> {article.price}€</p>
       </div>
       <button onClick={handleBuyClick}>Comprar</button>
-      {selectedArticle && (<ImageArticle
+      {isModalOpen && (<ImageArticle
         type={article.type}
         imageUrl={`data:image/jpeg;base64,${article.image}`}
         material={article.material}
@@ -127,6 +120,7 @@ const ArticleCard = ({ article, onBuyClick }) => {
         dimensions={article.dimensions}
         details={article.details}
         price={article.price}
+        id={article._id}
         onClose={handleCloseModal}
       />
       )}

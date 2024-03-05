@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ onSearch }) => {
+const Search = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    onSearch(searchTerm);
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    onSearch(value);
   };
 
   return (
-    <form onSubmit={handleSearchSubmit}>
+    <div>
       <input
         type="text"
         placeholder="Buscar..."
         value={searchTerm}
-        onChange={handleSearchChange}
+        onChange={handleChange}
       />
-    </form>
+    </div>
   );
 };
 
-export default SearchBar;
+export default Search;

@@ -21,3 +21,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.search-container {
+  display: flex;
+  justify-content: center;
+}

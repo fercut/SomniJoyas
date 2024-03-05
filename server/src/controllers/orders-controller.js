@@ -1,5 +1,10 @@
-import { createOrders, getOrders } from '../services/database/order-db-service.js';
-import { Orders } from '../models/index.js';
+import { 
+  createOrders, 
+  getOrders,
+  updateOrder,
+  deleteOrder,
+  getOrdersById,
+} from '../services/database/order-db-service.js';
 
 export async function getOrdersController(req,res,next){
   try {
@@ -38,7 +43,7 @@ export async function updateOrderController(req, res, next){
 
 export const deleteOrderController = async (req, res) => {
   try {
-    await Orders.findByIdAndDelete(req.params.id);
+    await deleteOrder(req.params.id);
     res.json({ message: 'Orden eliminado correctamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar orden' });
@@ -48,7 +53,7 @@ export const deleteOrderController = async (req, res) => {
 export async function getOrdersByIdController(req, res, next) {
   try {
     const userId = req.params.userId;
-    const orders = await Orders.find({ user: userId });
+    const orders = await getOrdersById({ user: userId });
     res.status(200).json({ orders });
 
   } catch (error) {
