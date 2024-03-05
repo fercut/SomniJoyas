@@ -6,8 +6,12 @@ const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const [message, setMessage] = useState(undefined);
   const navigate = useNavigate();
+  const [alert, setAlert] = useState({
+    title: '',
+    content: '',
+    showAlert: false,
+  });
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -17,6 +21,15 @@ const Login = ({ onLogin }) => {
   };
 
   const handleLogin = async () => {
+    if(email === '' || password === '') {
+      setAlert({
+        title: 'Error',
+        content: 'Por favor rellene correctamente los campos',
+        showAlert: true,
+      });
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3000/users/login', {
         method: 'POST',
@@ -39,9 +52,12 @@ const Login = ({ onLogin }) => {
         // Ejecutar la función onLogin con el token
         onLogin(data.token);
       } else {
-        // Manejar el caso de credenciales incorrectas
-        const { message } = data
-        setMessage(message);
+        setAlert({
+          title: 'Error',
+          content: 'Correo electronico o contraseña incorrecta',
+          showAlert: true,
+        });
+        return;
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
@@ -74,7 +90,13 @@ const Login = ({ onLogin }) => {
       />
       <button onClick={handleLogin}>Iniciar sesión</button>
       <button onClick={() => navigate('/signin')}>Registrate</button>
-      {message && <Alert title="Error" content={message} onClose={() => setMessage(undefined)}/>}
+      {alert.showAlert && (
+        <Alert
+          title={alert.title}
+          content={alert.content}
+          onClose={() => setAlert({ ...alert, showAlert: false })}
+        />
+      )}
     </div>
   );
 };

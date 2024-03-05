@@ -1,7 +1,11 @@
-import { createUser, getUsers } from '../services/database/user-db-service.js';
+import { 
+  createUser, 
+  getUsers,
+  getUserById,
+  deleteUser,
+} from '../services/database/user-db-service.js';
 import { encryptPassword } from '../utils/encrypt.js';
 import { User } from '../models/index.js';
-import { getUserById } from '../services/database/user-db-service.js';
 import logger from '../utils/logger.js';
 
 
@@ -35,8 +39,7 @@ export async function createUserController(req, res, next){
 
 export async function getUserMe(req, res, next){
   try {
-    const userId = req.user.id; // Obtén el ID del usuario desde el token
-    const user = await getUserById(userId);
+    const user = await getUserById(req.user.id);
 
     if (user) {
       return res.send(user);
@@ -109,7 +112,7 @@ export async function updateUserController(req, res, next) {
 
 export const deleteUserController = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    await deleteUser(req.params.id);
     res.json({ message: 'Usuario eliminado exitosamente' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar usuario' });

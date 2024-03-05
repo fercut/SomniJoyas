@@ -3,7 +3,7 @@ import '../style/CartCard.css'
 
 const CartCard = ({ cartItem, onIncrease, onDecrease, onDelete }) => {
   const { itemId, quantity, image, type, details, price } = cartItem;
-  
+
   const handleIncreaseClick = () => {
     onIncrease(itemId);
   };
@@ -20,6 +20,7 @@ const CartCard = ({ cartItem, onIncrease, onDecrease, onDelete }) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
+  console.log(cartItem);
 
   return (
     <div className="cart-card">
@@ -35,9 +36,9 @@ const CartCard = ({ cartItem, onIncrease, onDecrease, onDelete }) => {
         <p><b>Precio:</b> {price}€</p>
       </div>
       <div className="cart-buttons">
-        <button onClick={handleIncreaseClick}>+</button>
-        <p className='quantity'>{quantity}</p>
         <button onClick={handleDecreaseClick}>-</button>
+        <p className='quantity'>{quantity}</p>
+        <button onClick={handleIncreaseClick}>+</button>
         <button onClick={handleDeleteClick}>Eliminar</button>
       </div>
     </div>

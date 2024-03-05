@@ -1,19 +1,15 @@
 import { Orders } from "../../models/index.js";
-import logger from "../../utils/logger.js";
 
-export async function getOrders(filters){
-  // TODO add filters
+export async function getOrders() {
   const articles = await Orders.find();
   return articles;
 }
 
-export async function createOrders(order){
+export async function createOrders(order) {
   const ordersDoc = new Orders(order);
-  try {
-    const createOrder = await ordersDoc.save();
-    logger.info('Orden creada con exito')
-  return createOrder;
-  } catch (error) {
-    logger.info('Orden no creada, revise bien los campos')
-  }
+  return await ordersDoc.save();
+}
+
+export async function updateOrder(idArticle, newArticle) {
+  return await Orders.findByIdAndUpdate(idArticle, newArticle, { new: true });
 }

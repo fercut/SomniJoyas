@@ -29,7 +29,7 @@ export async function createOrderController(req, res, next){
 
 export async function updateOrderController(req, res, next){
   try {
-    const updateArticle = await Orders.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updateArticle = await updateOrder(req.params.id, req.body);
     res.json(updateArticle);
   } catch (error) {
     next(error);

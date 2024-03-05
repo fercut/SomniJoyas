@@ -1,30 +1,22 @@
 import { User } from "../../models/index.js";
 
 export async function getUserByEmail(email) {
-  try {
-    const user = await User.findOne({email});
-    return user;
-  } catch (error) {
-    throw new Error('Error al obtener el usuario por email');
-  }
+    return await User.findOne({email});
 }
 
-export async function getUsers(filters){
-  const users = await User.find();
-  return users;
+export async function getUsers(){
+  return await User.find();
 }
 
 export async function getUserById(userId) {
-  try {
-    const user = await User.findById(userId);
-    return user;
-  } catch (error) {
-    throw new Error('Error al obtener el usuario por ID');
-  }
+    return await User.findById(userId);
 }
 
-export async function createUser(user){
-  const userDoc = new User(user);
-  const createdUser = await userDoc.save();
-  return createdUser;
+export async function createUser(userId) {
+  const userDoc = new User(userId);
+  return await userDoc.save();
+}
+
+export async function deleteUser(userId) {
+  return User.findByIdAndDelete(userId);
 }

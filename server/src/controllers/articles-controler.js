@@ -1,5 +1,17 @@
-import { createArticle, getArticles, getArticleByID, updateArticle, deleteArticle } from '../services/database/article-db-service.js';
-import { Articles } from '../models/index.js';
+import { 
+   createArticle,
+   getArticles, 
+   getArticleByID, 
+   updateArticle, 
+   deleteArticle,
+   getRings,
+   getBracelets,
+   getChoker,
+   getEarrings,
+   getChains,
+   getPendants,
+   getSearch,
+  } from '../services/database/article-db-service.js';
 
 export async function getArticleController(req,res,next){
   try {
@@ -12,7 +24,7 @@ export async function getArticleController(req,res,next){
 
 export async function getArticleByIDController(req,res,next){
   try {
-    const article = getArticleByID(req.params.id);
+    const article = await getArticleByID(req.params.id);
     return res.json(article);
   } catch (error){
     next(error);
@@ -38,7 +50,7 @@ export async function createArticleController(req, res, next){
 
 export async function updateArticleController(req, res, next){
   try {
-    const update = await updateArticle(req.params.id, req.body, { new: true });
+    const update = await updateArticle(req.params.id, req.body);
     res.json(update);
   } catch (error) {
     next(error);
@@ -56,7 +68,7 @@ export const deleteArticleController = async (req, res) => {
 
 export async function getRingsController(req, res, next) {
   try {
-    const rings = await Articles.find({ type: 'anillo' });
+    const rings = await getRings({ type: 'anillo' });
     return res.status(200).json(rings);
   } catch (error) {
     console.error('Error al obtener los anillos:', error);
@@ -67,7 +79,7 @@ export async function getRingsController(req, res, next) {
 
 export async function getBraceletsController(req, res, next) {
   try {
-    const bracelets = await Articles.find({ type: 'pulsera' });
+    const bracelets = await getBracelets({ type: 'pulsera' });
     res.status(200).json(bracelets);
   } catch (error) {
     console.error('Error al obtener las pulseras:', error);
@@ -78,7 +90,7 @@ export async function getBraceletsController(req, res, next) {
 
 export async function getChokerController(req, res, next) {
   try {
-    const chokers = await Articles.find({ type: 'gargantilla' });
+    const chokers = await getChoker({ type: 'gargantilla' });
     res.status(200).json(chokers);
   } catch (error) {
     console.error('Error al obtener las gargantillas:', error);
@@ -89,7 +101,7 @@ export async function getChokerController(req, res, next) {
 
 export async function getEarringsController(req, res, next) {
   try {
-    const earrings = await Articles.find({ type: 'pendiente' });
+    const earrings = await getEarrings({ type: 'pendiente' });
     res.status(200).json(earrings);
   } catch (error) {
     console.error('Error al obtener los pendientes:', error);
@@ -100,7 +112,7 @@ export async function getEarringsController(req, res, next) {
 
 export async function getChainsController(req, res, next) {
   try {
-    const chains = await Articles.find({ type: 'cadena' });
+    const chains = await getChains({ type: 'cadena' });
     res.status(200).json(chains);
   } catch (error) {
     console.error('Error al obtener las cadenas:', error);
@@ -111,7 +123,7 @@ export async function getChainsController(req, res, next) {
 
 export async function getPendantsController(req, res, next) {
   try {
-    const pendants = await Articles.find({ type: 'colgante' });
+    const pendants = await getPendants({ type: 'colgante' });
     res.status(200).json(pendants);
   } catch (error) {
     console.error('Error al obtener los colgantes:', error);
@@ -124,12 +136,10 @@ export async function getSearchController(req, res, next) {
   try {
     const searchTerm = req.params.filtro;
 
-    const searchResults = await Articles.find({
-      $or: [
-        { type: { $regex: searchTerm, $options: 'i' } },
-        { material: { $regex: searchTerm, $options: 'i' } },
-        { details: { $regex: searchTerm, $options: 'i' } }
-      ]
+    const searchResults = await getSearch({
+      type: searchTerm,
+      material: searchTerm,
+      details: searchTerm
     });
 
     res.status(200).json(searchResults);
