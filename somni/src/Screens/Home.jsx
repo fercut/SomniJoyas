@@ -10,7 +10,7 @@ const Home = () => {
   const [isSearchEmpty, setIsSearchEmpty] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/articles')
+    fetch('https://somniapi.onrender.com/articles')
       .then((response) => response.json())
       .then((data) => setArticles(data))
       .catch((error) => console.error('Error al obtener los artículos:', error));
@@ -23,7 +23,7 @@ const Home = () => {
       setSearchResults([]);
     } else {
       // Realiza la búsqueda solo si la barra de búsqueda no está vacía
-      fetch(`http://localhost:3000/articles/search/${searchTerm}`)
+      fetch(`https://somniapi.onrender.com/articles/search/${searchTerm}`)
         .then((response) => response.json())
         .then((data) => setSearchResults(data))
         .catch((error) => console.error('Error al realizar la búsqueda:', error));

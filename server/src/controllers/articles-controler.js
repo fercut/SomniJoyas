@@ -1,8 +1,8 @@
-import { 
+import {
    createArticle,
-   getArticles, 
-   getArticleByID, 
-   updateArticle, 
+   getArticles,
+   getArticleByID,
+   updateArticle,
    deleteArticle,
    getRings,
    getBracelets,

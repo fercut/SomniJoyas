@@ -8,7 +8,7 @@ const Chokers = () => {
 
   useEffect(() => {
     // Hacer la solicitud GET al backend para obtener la lista de artículos
-    fetch('http://localhost:3000/articles/choker')
+    fetch('https://somniapi.onrender.com/articles/choker')
       .then((response) => response.json())
       .then((data) => setArticles(data))
       .catch((error) => console.error('Error al obtener los artículos:', error));

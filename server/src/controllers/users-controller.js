@@ -1,9 +1,9 @@
-import { 
-  createUser, 
+import {
+  createUser,
   getUsers,
   getUserById,
   deleteUser,
-} from '../services/database/user-db-service.js';
+} from '../services/database/user-db-services.js';
 import { encryptPassword } from '../utils/encrypt.js';
 import { User } from '../models/index.js';
 import logger from '../utils/logger.js';

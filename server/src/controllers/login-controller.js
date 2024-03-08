@@ -1,6 +1,6 @@
 import { HttpStatusError } from 'common-errors';
 import jwt from 'jsonwebtoken';
-import { getUserByEmail } from '../services/database/user-db-service.js';
+import { getUserByEmail } from '../services/database/user-db-services.js'
 import config from '../config.js';
 import { checkHash } from '../utils/encrypt.js';
 
@@ -20,7 +20,7 @@ export async function login(req, res, next){
         const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig);
         const userId = user.id;
 
-        return res.status(200).send({ token, userId });
+        return res.status(200).send({ token, userId });S
       }
     }
 

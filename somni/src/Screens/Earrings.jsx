@@ -8,7 +8,7 @@ const Earrings = () => {
 
   useEffect(() => {
     // Hacer la solicitud GET al backend para obtener la lista de artículos
-    fetch('http://localhost:3000/articles/earrings')
+    fetch('https://somniapi.onrender.com/articles/earrings')
       .then((response) => response.json())
       .then((data) => setArticles(data))
       .catch((error) => console.error('Error al obtener los artículos:', error));
