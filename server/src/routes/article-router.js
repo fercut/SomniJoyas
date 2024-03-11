@@ -12,7 +12,7 @@ import {
             getChainsController,
             getPendantsController,
             getSearchController,
-        } from '../controllers/articles-controler.js';
+        } from '../controllers/articles-controller.js';
 
 const router = Router();
 
