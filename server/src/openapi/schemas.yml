@@ -1,78 +1,124 @@
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        _id:
-          type: object
-          properties:
-            $oid:
-              type: string
-          description: ID del usuario en formato MongoDB ObjectId
-        name:
-          type: string
-          description: Nombre del usuario
-        lastname:
-          type: string
-          description: Apellidos del usuario
-        email:
-          type: string
-          format: email
-          description: Dirección de correo electrónico del usuario
-        phone:
-          type: integer
-          description: Número de teléfono del usuario
-        adress:
-          type: string
-          description: Dirección del usuario
-        location:
-          type: string
-          description: Localidad del usuario
-        city:
-          type: string
-          description: Ciudad del usuario
-        postalCode:
-          type: integer
-          description: Código postal del usuario
-        password:
-          type: string
-          description: Contraseña del usuario (debe ser almacenada de forma segura)
-        cart:
-          type: array
-          items:
-            type: object
-            properties:
-              articleId:
-                type: object
-                properties:
-                  $oid:
-                    type: string
-                description: ID del artículo en formato MongoDB ObjectId
-              quantity:
-                type: integer
-                description: Cantidad del artículo en el carrito
-            required:
-              - articleId
-              - quantity
-          description: Carrito de compras del usuario
-        createdAt:
-          type: string
-          format: date-time
-          description: Fecha y hora de creación del usuario
-        updatedAt:
-          type: string
-          format: date-time
-          description: Fecha y hora de última actualización del usuario
-        __v:
-          type: integer
-          description: Versión de la base de datos
-      required:
-        - name
-        - lastname
-        - email
-        - phone
-        - adress
-        - location
-        - city
-        - postalCode
-        - password
+User:
+  type: object
+  properties:
+    name:
+      type: string
+    lastname:
+      type: string
+    email:
+      type: string
+      format: email
+    phone:
+      type: number
+    address:
+      type: string
+    location:
+      type: string
+    city:
+      type: string
+    postalCode:
+      type: number
+    password:
+      type: string
+    cart:
+      type: array
+      items:
+        type: object
+        properties:
+          itemId:
+            type: string
+          quantity:
+            type: number
+  required:
+    - name
+    - lastname
+    - email
+    - phone
+    - address
+    - location
+    - city
+    - postalCode
+    - password
+  example:
+      name: "John"
+      lastname: "Doe"
+      email: "john.doe@example.com"
+      phone: 123456789
+      address: "123 Main St"
+      location: "City"
+      city: "Town"
+      postalCode: 12345
+      password: "password123"
+      cart:
+        - itemId: "123abc"
+          quantity: 2
+        - itemId: "456def"
+          quantity: 1
+
+Article:
+  type: object
+  properties:
+    type:
+      type: string
+      enum: [anillo, pendientes, pulseras, cadenas, gargantillas, colgante]
+    material:
+      type: string
+      enum: [plata, oro, acero]
+    finish:
+      type: string
+      enum: [plateado, dorado, oro rosado, rodiado]
+    dimensions:
+      type: string
+    details:
+      type: string
+    units:
+      type: number
+    price:
+      type: number
+    image:
+      type: string
+  required:
+    - type
+    - material
+    - finish
+    - details
+    - units
+    - price
+    - image
+  example:
+    type: "anillo"
+    material: "plata"
+    finish: "plateado"
+    dimensions: "10mm"
+    details: "Anillo de plata con diamantes incrustados."
+    units: 10
+    price: 100.00
+    image: "https://example.com/ring.jpg"
+
+
+Order:
+  type: object
+  properties:
+    user:
+      type: string
+    articles:
+      type: array
+      items:
+        type: string
+    date:
+      type: string
+      format: date-time
+    price:
+      type: number
+  required:
+    - user
+    - articles
+    - date
+    - price
+  example:
+    user: "user123"
+    articles:
+      - "article123"
+      - "article456"
+    date: "2024-03-15T08:00:00Z"
+    price: 250.00

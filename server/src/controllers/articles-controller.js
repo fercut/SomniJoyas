@@ -11,6 +11,7 @@ import {
    getChains,
    getPendants,
    getSearch,
+   getMixArticles,
   } from '../services/database/article-db-service.js';
 
 export async function getArticleController(req,res,next){
@@ -147,6 +148,15 @@ export async function getSearchController(req, res, next) {
   } catch (error) {
     console.error('Error al realizar la búsqueda:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+    next(error);
+  }
+}
+
+export async function getHomeController(req, res, next) {
+  try {
+    const articles = await getMixArticles(req.query);
+    return res.json(articles);
+  } catch (error){
     next(error);
   }
 }

@@ -1,29 +1,31 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import {
-            getArticleController,
-            getArticleByIDController,
-            createArticleController,
-            updateArticleController,
-            deleteArticleController,
-            getRingsController,
-            getBraceletsController,
-            getChokerController,
-            getEarringsController,
-            getChainsController,
-            getPendantsController,
-            getSearchController,
-        } from '../controllers/articles-controller.js';
+    getArticleController,
+    getArticleByIDController,
+    createArticleController,
+    updateArticleController,
+    deleteArticleController,
+    getRingsController,
+    getBraceletsController,
+    getChokerController,
+    getEarringsController,
+    getChainsController,
+    getPendantsController,
+    getSearchController,
+    getHomeController
+} from '../controllers/articles-controller.js';
+import { checkRoot } from '../middlewares/auth-middleware.js';
 
 const router = Router();
 
 // CRUD
-router.get('/', getArticleController);
-router.get('/get/:id',getArticleByIDController);
-router.post('/', createArticleController);
-router.patch('/:id', updateArticleController);
-router.delete('/:id', deleteArticleController);
+router.post('/', checkRoot, createArticleController);
+router.patch('/:id', checkRoot, updateArticleController);
+router.delete('/:id', checkRoot, deleteArticleController);
 
 // Mostrar articulos
+router.get('/', checkRoot, getArticleController);
+router.get('/get/:id', checkRoot, getArticleByIDController);
 router.get('/rings', getRingsController);
 router.get('/bracelets', getBraceletsController);
 router.get('/choker', getChokerController);
@@ -33,5 +35,8 @@ router.get('/pendants', getPendantsController);
 
 // Barra de busqueda
 router.get('/search/:filtro', getSearchController);
+
+// Pantalla de inicio
+router.get('/home', getHomeController);
 
 export default router;

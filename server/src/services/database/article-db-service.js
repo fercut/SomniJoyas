@@ -71,3 +71,8 @@ export async function getSearch({type, material, details}) {
     ]
   });
 }
+
+// Mostrar articulos de forma aleatoria
+export async function getMixArticles(){
+  return await Articles.aggregate([{ $sample: { size: await Articles.countDocuments() } }]);
+}

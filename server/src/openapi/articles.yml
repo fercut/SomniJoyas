@@ -1,0 +1,70 @@
+/articles:
+  get:
+    tags: [Articles]
+    summary: "Get all articles"
+    operationId: "getArticles"
+    responses:
+      "200":
+        description: "Successful operation"
+  post:
+    tags: [Articles]
+    summary: "Create a new article"
+    operationId: "createArticle"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Article"
+    responses:
+      "200":
+        description: "Article created successfully"
+/articles/{id}:
+  get:
+    tags: [Articles]
+    summary: "Get article by ID"
+    operationId: "getArticleById"
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "ID of the article to get"
+        schema:
+          type: "string"
+    responses:
+      "200":
+        description: "Successful operation"
+  put:
+    tags: [Articles]
+    summary: "Update article by ID"
+    operationId: "updateArticleById"
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "ID of the article to update"
+        schema:
+          type: "string"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Article"
+    responses:
+      "200":
+        description: "Article updated successfully"
+  delete:
+    tags: [Articles]
+    summary: "Delete article by ID"
+    operationId: "deleteArticleById"
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "ID of the article to delete"
+        schema:
+          type: "string"
+    responses:
+      "204":
+        description: "Article deleted successfully"

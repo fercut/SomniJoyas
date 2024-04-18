@@ -1,0 +1,70 @@
+/orders:
+  get:
+    tags: [Orders]
+    summary: "Get all orders"
+    operationId: "getOrders"
+    responses:
+      "200":
+        description: "Successful operation"
+  post:
+    tags: [Orders]
+    summary: "Create a new order"
+    operationId: "createOrder"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Order"
+    responses:
+      "200":
+        description: "Order created successfully"
+/orders/{id}:
+  get:
+    tags: [Orders]
+    summary: "Get order by ID"
+    operationId: "getOrderById"
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "ID of the order to get"
+        schema:
+          type: "string"
+    responses:
+      "200":
+        description: "Successful operation"
+  put:
+    tags: [Orders]
+    summary: "Update order by ID"
+    operationId: "updateOrderById"
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "ID of the order to update"
+        schema:
+          type: "string"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Order"
+    responses:
+      "200":
+        description: "Order updated successfully"
+  delete:
+    tags: [Orders]
+    summary: "Delete order by ID"
+    operationId: "deleteOrderById"
+    parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "ID of the order to delete"
+        schema:
+          type: "string"
+    responses:
+      "204":
+        description: "Order deleted successfully"

@@ -1,0 +1,33 @@
+UserExample:
+  name: "John"
+  lastname: "Doe"
+  email: "john.doe@example.com"
+  phone: 123456789
+  address: "123 Main St"
+  location: "City"
+  city: "Town"
+  postalCode: 12345
+  password: "password123"
+  cart:
+    - itemId: "123abc"
+      quantity: 2
+    - itemId: "456def"
+      quantity: 1
+
+ArticleExample:
+  type: "anillo"
+  material: "plata"
+  finish: "plateado"
+  dimensions: "10mm"
+  details: "Anillo de plata con diamantes incrustados."
+  units: 10
+  price: 100.00
+  image: "https://example.com/ring.jpg"
+
+OrderExample:
+  user: "user123"
+  articles:
+    - "article123"
+    - "article456"
+  date: "2024-03-15T08:00:00Z"
+  price: 250.00

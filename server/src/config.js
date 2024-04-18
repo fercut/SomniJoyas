@@ -4,6 +4,7 @@ const config = {
       port: process.env.PORT || 8080,
     app: {
         secretKey: process.env.SECRET_KEY,
+        secretRoot: process.env.SECRET_ROOT,
     },
     database: {
         user: process.env.MONGODB_USER,

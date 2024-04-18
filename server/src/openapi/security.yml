@@ -1,7 +1,5 @@
-apiKey:
-  type: apiKey
-  name: Authorization
-  in: header
-bearerAuth:
-  type: http
-  scheme: bearer
+securitySchemes:
+  JWTAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT

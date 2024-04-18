@@ -1,0 +1,15 @@
+responses:
+  UnauthorizedError:
+    description: Unauthorized access error
+    content:
+      application/json:
+        example:
+          message: "Unauthorized access"
+          code: 401
+  InternalServerError:
+    description: Internal server error
+    content:
+      application/json:
+        example:
+          message: "Internal server error"
+          code: 500

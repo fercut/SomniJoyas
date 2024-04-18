@@ -1,0 +1,712 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Somni joyas",
+        "description": "API for SomnoJoyas DB management"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000"
+        },
+        {
+            "url": "https://somniapi.onrender.com"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "number"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "postalCode": {
+                        "type": "number"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "cart": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "itemId": {
+                                    "type": "string"
+                                },
+                                "quantity": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "lastname",
+                    "email",
+                    "phone",
+                    "address",
+                    "location",
+                    "city",
+                    "postalCode",
+                    "password"
+                ],
+                "example": {
+                    "name": "John",
+                    "lastname": "Doe",
+                    "email": "john.doe@example.com",
+                    "phone": 123456789,
+                    "address": "123 Main St",
+                    "location": "City",
+                    "city": "Town",
+                    "postalCode": 12345,
+                    "password": "password123",
+                    "cart": [
+                        {
+                            "itemId": "123abc",
+                            "quantity": 2
+                        },
+                        {
+                            "itemId": "456def",
+                            "quantity": 1
+                        }
+                    ]
+                }
+            },
+            "Article": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "anillo",
+                            "pendientes",
+                            "pulseras",
+                            "cadenas",
+                            "gargantillas",
+                            "colgante"
+                        ]
+                    },
+                    "material": {
+                        "type": "string",
+                        "enum": [
+                            "plata",
+                            "oro",
+                            "acero"
+                        ]
+                    },
+                    "finish": {
+                        "type": "string",
+                        "enum": [
+                            "plateado",
+                            "dorado",
+                            "oro rosado",
+                            "rodiado"
+                        ]
+                    },
+                    "dimensions": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "string"
+                    },
+                    "units": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "image": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "type",
+                    "material",
+                    "finish",
+                    "details",
+                    "units",
+                    "price",
+                    "image"
+                ],
+                "example": {
+                    "type": "anillo",
+                    "material": "plata",
+                    "finish": "plateado",
+                    "dimensions": "10mm",
+                    "details": "Anillo de plata con diamantes incrustados.",
+                    "units": 10,
+                    "price": 100,
+                    "image": "https://example.com/ring.jpg"
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string"
+                    },
+                    "articles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "user",
+                    "articles",
+                    "date",
+                    "price"
+                ],
+                "example": {
+                    "user": "user123",
+                    "articles": [
+                        "article123",
+                        "article456"
+                    ],
+                    "date": "2024-03-15T08:00:00Z",
+                    "price": 250
+                }
+            }
+        },
+        "securitySchemes": {
+            "securitySchemes": {
+                "JWTAuth": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
+                }
+            }
+        },
+        "examples": {
+            "UserExample": {
+                "name": "John",
+                "lastname": "Doe",
+                "email": "john.doe@example.com",
+                "phone": 123456789,
+                "address": "123 Main St",
+                "location": "City",
+                "city": "Town",
+                "postalCode": 12345,
+                "password": "password123",
+                "cart": [
+                    {
+                        "itemId": "123abc",
+                        "quantity": 2
+                    },
+                    {
+                        "itemId": "456def",
+                        "quantity": 1
+                    }
+                ]
+            },
+            "ArticleExample": {
+                "type": "anillo",
+                "material": "plata",
+                "finish": "plateado",
+                "dimensions": "10mm",
+                "details": "Anillo de plata con diamantes incrustados.",
+                "units": 10,
+                "price": 100,
+                "image": "https://example.com/ring.jpg"
+            },
+            "OrderExample": {
+                "user": "user123",
+                "articles": [
+                    "article123",
+                    "article456"
+                ],
+                "date": "2024-03-15T08:00:00Z",
+                "price": 250
+            }
+        },
+        "responses": {
+            "responses": {
+                "UnauthorizedError": {
+                    "description": "Unauthorized access error",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "message": "Unauthorized access",
+                                "code": 401
+                            }
+                        }
+                    }
+                },
+                "InternalServerError": {
+                    "description": "Internal server error",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "message": "Internal server error",
+                                "code": 500
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get all orders",
+                "operationId": "getOrders",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Create a new order",
+                "operationId": "createOrder",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Order"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Order created successfully"
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order by ID",
+                "operationId": "getOrderById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the order to get",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order by ID",
+                "operationId": "updateOrderById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the order to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Order"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Order updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Delete order by ID",
+                "operationId": "deleteOrderById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the order to delete",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Order deleted successfully"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Iniciar sesión",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "Correo electrónico del usuario"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Contraseña del usuario"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Token de autenticación"
+                                        },
+                                        "userId": {
+                                            "type": "string",
+                                            "description": "ID del usuario"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Contraseña o email incorrecto"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all users",
+                "operationId": "getUsers",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new user",
+                "operationId": "createUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created successfully"
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user by ID",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the user to get",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user by ID",
+                "operationId": "updateUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the user to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user by ID",
+                "operationId": "deleteUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the user to delete",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted successfully"
+                    }
+                }
+            }
+        },
+        "/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all articles",
+                "operationId": "getArticles",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Create a new article",
+                "operationId": "createArticle",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Article"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Article created successfully"
+                    }
+                }
+            }
+        },
+        "/articles/{id}": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get article by ID",
+                "operationId": "getArticleById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the article to get",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Update article by ID",
+                "operationId": "updateArticleById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the article to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Article"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Article updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Delete article by ID",
+                "operationId": "deleteArticleById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the article to delete",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Article deleted successfully"
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "summary": "pong",
+                "responses": {
+                    "200": {
+                        "description": "ping/pong"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Orders",
+            "description": "Order-related endpoints"
+        },
+        {
+            "name": "Users",
+            "description": "User-related endpoints"
+        },
+        {
+            "name": "Articles",
+            "description": "Articles-related endpoints"
+        }
+    ]
+}
