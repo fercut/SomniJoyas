@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Alert from '../components/Alert'; 
+import Alert from '../components/Alert';
 import '../style/form.css';
 
 const Signin = ({ onRegistro }) => {
@@ -17,8 +17,7 @@ const Signin = ({ onRegistro }) => {
 
   const onSubmit = async (data) => {
     try {
-      // Realizas la solicitud POST al servidor con los datos del formulario
-      const response = await fetch('http://localhost:3000/users', {
+      const responseLocal = await fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,39 +25,47 @@ const Signin = ({ onRegistro }) => {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
-        // Manejar la respuesta exitosa
+      if (responseLocal.ok) {
         setMessage('Usuario registrado con éxito');
         setRegistroExitoso(true);
-
-        // Resetear el formulario después de un registro exitoso
         reset();
       } else {
-        // Manejar la respuesta de error del servidor
-        setMessage('Error al registrar el usuario');
+        const responseRender = await fetch('https://somniapi.onrender.com/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        if (responseRender.ok) {
+          setMessage('Usuario registrado con éxito');
+          setRegistroExitoso(true);
+          reset();
+        } else {
+          setMessage('Error al registrar el usuario');
+        }
       }
-    } catch (error) {
-      // Manejar errores de red u otros errores inesperados
-      setMessage('Error en la solicitud:', error);
-    }
-  };
+      } catch (error) {
+        setMessage('Error en la solicitud:', error);
+      }
+    };
 
-  return (
-    <div className="container">
-      <h2>Regístrate</h2>
-      {registroExitoso && <p>Registro exitoso. Puedes iniciar sesión ahora.</p>}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        
-          <input type="text" placeholder='Nombre' style={{fontWeight: 'bold'}} {...register('name', { required: 'Este campo es requerido' })} />
+    return (
+      <div className="container">
+        <h2>Regístrate</h2>
+        {registroExitoso && <p>Registro exitoso. Puedes iniciar sesión ahora.</p>}
+        <form onSubmit={handleSubmit(onSubmit)}>
+
+          <input type="text" placeholder='Nombre' style={{ fontWeight: 'bold' }} {...register('name', { required: 'Este campo es requerido' })} />
           {errors.name && <span>{errors.name.message}</span>}
 
-          <input type="text" placeholder='Apellidos' style={{fontWeight: 'bold'}} {...register('lastname', { required: 'Este campo es requerido' })}/>
+          <input type="text" placeholder='Apellidos' style={{ fontWeight: 'bold' }} {...register('lastname', { required: 'Este campo es requerido' })} />
           {errors.lastname && <span>{errors.lastname.message}</span>}
 
           <input
             type="text"
             placeholder='Correo electrónico'
-            style={{fontWeight: 'bold'}}
+            style={{ fontWeight: 'bold' }}
             {...register('email', {
               required: 'Este campo es requerido',
               pattern: {
@@ -72,7 +79,7 @@ const Signin = ({ onRegistro }) => {
           <input
             type="text"
             placeholder='Verifique su correo'
-            style={{fontWeight: 'bold'}}
+            style={{ fontWeight: 'bold' }}
             {...register('verifyEmail', {
               required: 'Este campo es requerido',
               validate: (value) => value === watch('email') || 'Los correos electrónicos no coinciden',
@@ -83,7 +90,7 @@ const Signin = ({ onRegistro }) => {
           <input
             type="tel"
             placeholder='Telefono'
-            style={{fontWeight: 'bold'}}
+            style={{ fontWeight: 'bold' }}
             {...register('phone', {
               required: 'Este campo es requerido',
               pattern: {
@@ -94,19 +101,19 @@ const Signin = ({ onRegistro }) => {
           />
           {errors.phone && <span>{errors.phone.message}</span>}
 
-          <input type="text" placeholder='Dirección' style={{fontWeight: 'bold'}} {...register('adress', { required: 'Este campo es requerido' })}/>
+          <input type="text" placeholder='Dirección' style={{ fontWeight: 'bold' }} {...register('adress', { required: 'Este campo es requerido' })} />
           {errors.adress && <span>{errors.adress.message}</span>}
 
-          <input type="text" placeholder='Localidad' style={{fontWeight: 'bold'}} {...register('location', { required: 'Este campo es requerido' })} />
+          <input type="text" placeholder='Localidad' style={{ fontWeight: 'bold' }} {...register('location', { required: 'Este campo es requerido' })} />
           {errors.location && <span>{errors.location.message}</span>}
 
-          <input type="text" placeholder='Ciudad' style={{fontWeight: 'bold'}} {...register('city', { required: 'Este campo es requerido' })} />
+          <input type="text" placeholder='Ciudad' style={{ fontWeight: 'bold' }} {...register('city', { required: 'Este campo es requerido' })} />
           {errors.city && <span>{errors.city.message}</span>}
-        
+
           <input
             type="text"
             placeholder='Código Postal'
-            style={{fontWeight: 'bold'}}
+            style={{ fontWeight: 'bold' }}
             {...register('postalCode', {
               required: 'Este campo es requerido',
               pattern: {
@@ -116,14 +123,14 @@ const Signin = ({ onRegistro }) => {
             })}
           />
           {errors.postalCode && <span>{errors.postalCode.message}</span>}
-        
-          <input type="password" placeholder='Contraseña' style={{fontWeight: 'bold'}} {...register('password', { required: 'Este campo es requerido' })} />
+
+          <input type="password" placeholder='Contraseña' style={{ fontWeight: 'bold' }} {...register('password', { required: 'Este campo es requerido' })} />
           {errors.password && <span>{errors.password.message}</span>}
 
           <input
             type="password"
             placeholder='Verificar Contraseña'
-            style={{fontWeight: 'bold'}}
+            style={{ fontWeight: 'bold' }}
             {...register('verifyPassword', {
               required: 'Este campo es requerido',
               validate: (value) => value === watch('password') || 'Las contraseñas no coinciden',
@@ -131,11 +138,11 @@ const Signin = ({ onRegistro }) => {
           />
           {errors.verifyPassword && <span>{errors.verifyPassword.message}</span>}
 
-        <button type="submit">Registrar</button>
-        {message && <Alert title={registroExitoso ? "Puede iniciar sesión" : "Algo a fallado"} content={message} onClose={() => setMessage(undefined)}/>}
-      </form>
-    </div>
-  );
-};
+          <button type="submit">Registrar</button>
+          {message && <Alert title={registroExitoso ? "Puede iniciar sesión" : "Algo a fallado"} content={message} onClose={() => setMessage(undefined)} />}
+        </form>
+      </div>
+    );
+  };
 
-export default Signin;
+  export default Signin;

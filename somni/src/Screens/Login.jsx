@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Navigate, useNavigate  } from 'react-router-dom';
-import Alert from '../components/Alert'; 
+import { Navigate, useNavigate } from 'react-router-dom';
+import Alert from '../components/Alert';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ const Login = ({ onLogin }) => {
   };
 
   const handleLogin = async () => {
-    if(email === '' || password === '') {
+    if (email === '' || password === '') {
       setAlert({
         title: 'Error',
         content: 'Por favor rellene correctamente los campos',
@@ -31,7 +31,7 @@ const Login = ({ onLogin }) => {
     }
 
     try {
-      const response = await fetch('https://somniapi.onrender.com/users/login', {
+      const responseLocal = await fetch('http://localhost:3000/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,25 +39,36 @@ const Login = ({ onLogin }) => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Almacenar el token en sessionStorage
+      if (responseLocal.ok) {
+        const data = await responseLocal.json();
         sessionStorage.setItem('token', data.token);
         sessionStorage.setItem('userId', data.userId);
-
-        // Actualizar el estado loggedIn
         setLoggedIn(true);
-
-        // Ejecutar la función onLogin con el token
         onLogin(data.token);
+
       } else {
-        setAlert({
-          title: 'Error',
-          content: 'Correo electronico o contraseña incorrecta',
-          showAlert: true,
+        const responseRender = await fetch('https://somniapi.onrender.com/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
         });
-        return;
+
+        if (responseRender.ok) {
+          const data = await responseRender.json();
+          sessionStorage.setItem('token', data.token);
+          sessionStorage.setItem('userId', data.userId);
+          setLoggedIn(true);
+          onLogin(data.token);
+        } else {
+          setAlert({
+            title: 'Error',
+            content: 'Correo electronico o contraseña incorrecta',
+            showAlert: true,
+          });
+          return;
+        }
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);

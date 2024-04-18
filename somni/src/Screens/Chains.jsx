@@ -7,12 +7,25 @@ const Chains = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    // Hacer la solicitud GET al backend para obtener la lista de artículos
-    fetch('https://somniapi.onrender.com/articles/chains')
-      .then((response) => response.json())
-      .then((data) => setArticles(data))
-      .catch((error) => console.error('Error al obtener los artículos:', error));
-  }, []); 
+    fetch('http://localhost:3000/articles/chains')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al obtener los artículos desde localhost:3000');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setArticles(data);
+      })
+      .catch((error) => {
+        console.error(error.message); 
+        console.log('Intentando obtener los artículos desde somniapi.onrender.com');
+        fetch('https://somniapi.onrender.com/articles/chains')
+          .then((response) => response.json())
+          .then((data) => setArticles(data))
+          .catch((error) => console.error('Error al obtener los artículos desde somniapi.onrender.com:', error));
+      });
+  }, []);
 
   return (
     <div>

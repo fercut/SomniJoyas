@@ -19,26 +19,21 @@ const User = () => {
     });
 
     useEffect(() => {
-        // Obtener los datos del usuario desde el backend usando el userId de sessionStorage
         const fetchUserData = async () => {
 
             if (!userId || !token) {
-                // Redirigir a la página de inicio de sesión si no hay userId o token
-                // Puedes usar react-router-dom para manejar la navegación
-                // Ejemplo: history.push('/login');
                 return;
             }
 
             try {
-                const response = await fetch('http://localhost:3000/users/me', {
+                const responseLocal = await fetch('http://localhost:3000/users/me', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
 
-                const data = await response.json();
-
-                if (response.ok) {
+                if (responseLocal.ok) {
+                    const data = await responseLocal.json();
                     setUserData({
                         name: data.name,
                         lastname: data.lastname,
@@ -51,8 +46,28 @@ const User = () => {
                         quantity: data.cart.quantity,
                     });
                 } else {
-                    // Manejar el caso de error al obtener los datos del usuario
-                    console.error('Error al obtener los datos del usuario:', data.message);
+                    const responseRender = await fetch('https://somniapi.onrender.com/users/me', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (responseRender.ok) {
+                        const data = await responseRender.json();
+                        setUserData({
+                            name: data.name,
+                            lastname: data.lastname,
+                            email: data.email,
+                            phone: data.phone,
+                            adress: data.adress,
+                            location: data.location,
+                            city: data.city,
+                            postalCode: data.postalCode,
+                            quantity: data.cart.quantity,
+                        });
+                    } else {
+                        console.error('Error al obtener los datos del usuario:', data.message);
+                    }
                 }
             } catch (error) {
                 console.error('Error en la solicitud:', error);
@@ -76,7 +91,6 @@ const User = () => {
                 if (response.ok) {
                     setOrders(data.orders);
                 } else {
-                    // Manejar el caso de error al obtener el historial de pedidos
                     console.error('Error al obtener el historial de pedidos:', data.message);
                 }
             } catch (error) {

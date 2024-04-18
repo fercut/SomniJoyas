@@ -55,18 +55,14 @@ const ShoppingCart = () => {
       }
 
       try {
-        const response = await fetch('https://somniapi.onrender.com/users/me', {
+        const responseLocal = await fetch('http://localhost:3000/users/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        const data = await response.json();
-
-        if (data)
-
-          if (response.ok) {
-            // Obtener detalles adicionales para cada artículo en el carrito
+          if (responseLocal.ok && data) {
+            const data = await responseLocal.json();
             setUserData({
               name: data.name,
               lastname: data.lastname,
@@ -78,19 +74,43 @@ const ShoppingCart = () => {
               postalCode: data.postalCode,
               quantity: data.cart.quantity,
             });
-
             const cartWithDetails = await Promise.all(
               data.cart.map(async (item) => {
                 const articleDetails = await fetchArticleDetails(item.itemId);
                 return { ...item, ...articleDetails, };
               })
             );
-
-            // Actualizar el estado con los artículos del carrito del usuario con detalles
             setCartItems(cartWithDetails);
           } else {
-            // Manejar el caso de error al obtener el carrito
-            console.error('Error al obtener el carrito:', data.message);
+            const responseRender = await fetch('https://somniapi.onrender.com/users/me', {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+              if (responseRender.ok && data) {
+                const data = await responseRender.json();
+                setUserData({
+                  name: data.name,
+                  lastname: data.lastname,
+                  email: data.email,
+                  phone: data.phone,
+                  adress: data.adress,
+                  location: data.location,
+                  city: data.city,
+                  postalCode: data.postalCode,
+                  quantity: data.cart.quantity,
+                });
+                const cartWithDetails = await Promise.all(
+                  data.cart.map(async (item) => {
+                    const articleDetails = await fetchArticleDetails(item.itemId);
+                    return { ...item, ...articleDetails, };
+                  })
+                );
+                setCartItems(cartWithDetails);
+              } else {
+                console.error('Error al obtener el carrito:', data.message);
+              }
           }
       } catch (error) {
         console.error('Error en la solicitud:', error);
