@@ -16,7 +16,7 @@ const articlesSchema = new Schema({
   finish: {
     type: String,
     require: true,
-    enum: ['plateado', 'dorado', ' oro rosado', 'rodiado']
+    enum: ['plateado', 'Baño de oro de 18kt.', ' oro rosado', 'rodiado']
   },
   dimensions: {type: String},
   details: {type: String, require: true},

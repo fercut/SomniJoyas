@@ -10,9 +10,15 @@ const orderSchema = new Schema({
   },
   article: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Articulo',
-      required: true
+      articleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Articulo',
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
     }
   ],
   date: {

@@ -45,73 +45,44 @@ const ShoppingCart = () => {
 
 
   useEffect(() => {
-    // Obtener el carrito del usuario desde el backend
     const fetchCart = async () => {
 
       if (!token) {
-        // Redirigir a la página de inicio de sesión si no hay un token
         navigate('/login');
         return;
       }
 
       try {
-        const responseLocal = await fetch('http://localhost:3000/users/me', {
+        const responseRender = await fetch(process.env.CONECTION + '/users/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-          if (responseLocal.ok && data) {
-            const data = await responseLocal.json();
-            setUserData({
-              name: data.name,
-              lastname: data.lastname,
-              email: data.email,
-              phone: data.phone,
-              adress: data.adress,
-              location: data.location,
-              city: data.city,
-              postalCode: data.postalCode,
-              quantity: data.cart.quantity,
-            });
-            const cartWithDetails = await Promise.all(
-              data.cart.map(async (item) => {
-                const articleDetails = await fetchArticleDetails(item.itemId);
-                return { ...item, ...articleDetails, };
-              })
-            );
-            setCartItems(cartWithDetails);
-          } else {
-            const responseRender = await fetch('https://somniapi.onrender.com/users/me', {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
+        const data = await responseRender.json();
 
-              if (responseRender.ok && data) {
-                const data = await responseRender.json();
-                setUserData({
-                  name: data.name,
-                  lastname: data.lastname,
-                  email: data.email,
-                  phone: data.phone,
-                  adress: data.adress,
-                  location: data.location,
-                  city: data.city,
-                  postalCode: data.postalCode,
-                  quantity: data.cart.quantity,
-                });
-                const cartWithDetails = await Promise.all(
-                  data.cart.map(async (item) => {
-                    const articleDetails = await fetchArticleDetails(item.itemId);
-                    return { ...item, ...articleDetails, };
-                  })
-                );
-                setCartItems(cartWithDetails);
-              } else {
-                console.error('Error al obtener el carrito:', data.message);
-              }
-          }
+        if (responseRender.ok && data) {
+          setUserData({
+            name: data.name,
+            lastname: data.lastname,
+            email: data.email,
+            phone: data.phone,
+            adress: data.adress,
+            location: data.location,
+            city: data.city,
+            postalCode: data.postalCode,
+            quantity: data.cart.quantity,
+          });
+          const cartWithDetails = await Promise.all(
+            data.cart.map(async (item) => {
+              const articleDetails = await fetchArticleDetails(item.itemId);
+              return { ...item, ...articleDetails, };
+            })
+          );
+          setCartItems(cartWithDetails);
+        } else {
+          console.error('Error al obtener el carrito:', data.message);
+        }
       } catch (error) {
         console.error('Error en la solicitud:', error);
       }
@@ -119,7 +90,7 @@ const ShoppingCart = () => {
 
     const fetchArticleDetails = async (articleId) => {
       try {
-        const response = await fetch(`http://localhost:3000/articles/get/${articleId}`);
+        const response = await fetch(`https://somniapi.onrender.com/articles/get/${articleId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -139,7 +110,7 @@ const ShoppingCart = () => {
 
   const handleIncrease = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
+      const response = await fetch(`https://somniapi.onrender.com/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -170,7 +141,7 @@ const ShoppingCart = () => {
 
   const handleDecrease = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
+      const response = await fetch(`https://somniapi.onrender.com/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -182,7 +153,6 @@ const ShoppingCart = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Actualizar el estado con los artículos del carrito después de disminuir la cantidad
         setCartItems((prevCart) =>
           prevCart.map((item) =>
             item.itemId === itemId
@@ -191,7 +161,6 @@ const ShoppingCart = () => {
           )
         );
       } else {
-        // Manejar el caso de error al disminuir la cantidad
         console.error('Error al disminuir la cantidad:', data.message);
       }
     } catch (error) {
@@ -201,7 +170,7 @@ const ShoppingCart = () => {
 
   const handleDelete = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
+      const response = await fetch(`https://somniapi.onrender.com/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -213,10 +182,8 @@ const ShoppingCart = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Actualizar el estado con los artículos del carrito después de eliminar un artículo
         setCartItems((prevCart) => prevCart.filter((item) => item.itemId !== itemId));
       } else {
-        // Manejar el caso de error al eliminar el artículo
         console.error('Error al eliminar el artículo:', data.message);
       }
     } catch (error) {
@@ -226,10 +193,8 @@ const ShoppingCart = () => {
 
   const handleOptionChange = (option) => {
     if (selectedOption === option) {
-      // Si ya está seleccionado, deseleccionar
       setSelectedOption(null);
     } else {
-      // Si no está seleccionado, seleccionar
       setSelectedOption(option);
     }
   };
@@ -246,7 +211,7 @@ const ShoppingCart = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:3000/orders/', {
+      const response = await fetch('https://somniapi.onrender.com/orders/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -262,23 +227,17 @@ const ShoppingCart = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Limpiar el carrito después de realizar con éxito la orden
         handleDelete(cartItems.map(item => item.itemId));
-
-        // Mostrar la alerta de pedido realizado con éxito
         setAlert({
           title: 'Pedido realizado',
           content: '¡Gracias por tu compra!',
           showAlert: true,
         });
-
-        // Puedes redirigir al usuario a otra página si es necesario
         setTimeout(() => {
           navigate('/home');
         }, 3000);
 
       } else {
-        // Mostrar la alerta de error al realizar el pedido
         setAlert({
           title: 'Error',
           content: 'Error al realizar el pedido. Por favor, inténtalo de nuevo.',
@@ -288,7 +247,6 @@ const ShoppingCart = () => {
         console.error('Error al crear la orden:', data.message);
       }
     } catch (error) {
-      // Mostrar la alerta de error en la solicitud
       setAlert({
         title: 'Error',
         content: 'Error al realizar el pedido. Por favor, inténtalo de nuevo.',

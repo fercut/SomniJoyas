@@ -49,7 +49,7 @@ const ImageArticle = ({ type, imageUrl, material, finish, dimensions, details, p
         return;
       }
 
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
+      const response = await fetch(`${process.env.CONECTION}/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

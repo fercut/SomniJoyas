@@ -12,29 +12,27 @@ const ArticleCard = ({ article, onBuyClick }) => {
     showAlert: false,
   });
 
-  const isArticleInCart = (articleId) => {
-    return cartItems.some((item) => item.itemId === articleId);
-  };
-
   const handleBuyClick = async () => {
     try {
       const userId = sessionStorage.getItem('userId');
-
+  
       if (!userId) {
         console.error('UserId no encontrado en sessionStorage');
         return;
       }
-
+  
       if (!article._id) {
         console.error('El artículo no tiene un ID definido');
         return;
       }
-
-      if (isArticleInCart(article._id)) {
+  
+      const isArticleAlreadyInCart = isArticleInCart(article._id);
+  
+      if (isArticleAlreadyInCart) {
         return;
       }
-
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
+  
+      const requestOptions = {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -48,13 +46,12 @@ const ArticleCard = ({ article, onBuyClick }) => {
             }
           }
         }),
-
-      });
-
+      };
+  
+      const response = await fetch(`${process.env.CONECTION}/users/${userId}`, requestOptions);
       const data = await response.json();
-
+  
       if (response.ok) {
-
         setAlert({
           title: 'Articulo añadido',
           content: 'Articulo añadido correctamente a su cesta',
@@ -73,7 +70,7 @@ const ArticleCard = ({ article, onBuyClick }) => {
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
-  };
+  };  
 
   const handleImageClick = () => {
     setIsModalOpen(true);

@@ -24,8 +24,8 @@ router.patch('/:id', checkRoot, updateArticleController);
 router.delete('/:id', checkRoot, deleteArticleController);
 
 // Mostrar articulos
-router.get('/', checkRoot, getArticleController);
-router.get('/get/:id', checkRoot, getArticleByIDController);
+router.get('/', getArticleController);
+router.get('/get/:id', getArticleByIDController);
 router.get('/rings', getRingsController);
 router.get('/bracelets', getBraceletsController);
 router.get('/choker', getChokerController);

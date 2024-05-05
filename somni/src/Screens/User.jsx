@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/User.css';
 import UpdateUser from '../components/UpdateUser';
+import OrderDetail from '../components/OrderDetail';
 
 const User = () => {
     const token = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
     const [orders, setOrders] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showOrderDetail, setShowOrderDetail] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
     const [userData, setUserData] = useState({
         name: '',
         lastname: '',
@@ -24,7 +27,7 @@ const User = () => {
     };
     const handleSaveChanges = async (editedData) => {
         try {
-            const response = await fetch(`http://localhost:3000/users/${userId}`, {
+            const response = await fetch(`${process.env.CONECTION}/${userId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,21 +40,7 @@ const User = () => {
                 onSave(editedData);
                 onClose();
             } else {
-                const response = await fetch(`https://somniapi.onrender.com/${userId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-                    },
-                    body: JSON.stringify(editedData),
-                });
-
-                if (response.ok) {
-                    onSave(editedData);
-                    onClose();
-                } else {
-                    console.error('Error al actualizar los datos del usuario:', response.statusText);
-                }
+                console.error('Error al actualizar los datos del usuario:', response.statusText);
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
@@ -59,6 +48,15 @@ const User = () => {
     };
     const handleCloseModal = () => {
         setShowEditModal(false);
+    };
+
+    const handleOrderDetailClick = (order) => {
+        setSelectedOrder(order);
+        setShowOrderDetail(true);
+    };
+
+    const handleCloseOrderDetail = () => {
+        setShowOrderDetail(false);
     };
 
     useEffect(() => {
@@ -69,14 +67,14 @@ const User = () => {
             }
 
             try {
-                const responseLocal = await fetch('http://localhost:3000/users/me', {
+                const responseRender = await fetch(`${process.env.CONECTION}/users/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
 
-                if (responseLocal.ok) {
-                    const data = await responseLocal.json();
+                if (responseRender.ok) {
+                    const data = await responseRender.json();
                     setUserData({
                         name: data.name,
                         lastname: data.lastname,
@@ -89,28 +87,7 @@ const User = () => {
                         quantity: data.cart.quantity,
                     });
                 } else {
-                    const responseRender = await fetch('https://somniapi.onrender.com/users/me', {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-
-                    if (responseRender.ok) {
-                        const data = await responseRender.json();
-                        setUserData({
-                            name: data.name,
-                            lastname: data.lastname,
-                            email: data.email,
-                            phone: data.phone,
-                            adress: data.adress,
-                            location: data.location,
-                            city: data.city,
-                            postalCode: data.postalCode,
-                            quantity: data.cart.quantity,
-                        });
-                    } else {
-                        console.error('Error al obtener los datos del usuario:', data.message);
-                    }
+                    console.error('Error al obtener los datos del usuario:', data.message);
                 }
             } catch (error) {
                 console.error('Error en la solicitud:', error);
@@ -121,7 +98,7 @@ const User = () => {
             const userId = sessionStorage.getItem('userId');
 
             try {
-                const response = await fetch(`http://localhost:3000/orders/order/${userId}`, {
+                const response = await fetch(`${process.env.CONECTION}/orders/order/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',
@@ -186,7 +163,7 @@ const User = () => {
                                         <p><b>Número de pedido: </b> ***{order._id.substring(order._id.length - 4)}</p>
                                         <p><b>Precio del pedido:</b> {order.price}€</p>
                                     </div>
-                                    <button id={`Ver pedido ${order._id}`}>Ver</button>
+                                    <button id={`Ver pedido ${order._id}`} onClick={() => handleOrderDetailClick(order)}>Ver</button>
                                 </li>
                             ))}
                         </ul>
@@ -196,6 +173,9 @@ const User = () => {
                 </div>
             </div>
             <button onClick={handleLogout}>Cerrar sesión</button>
+            {showOrderDetail && (
+                <OrderDetail order={selectedOrder} onClose={handleCloseOrderDetail} />
+            )}
         </div>
     );
 };
