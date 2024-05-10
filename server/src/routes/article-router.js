@@ -28,7 +28,7 @@ router.get('/', getArticleController);
 router.get('/get/:id', getArticleByIDController);
 router.get('/rings', getRingsController);
 router.get('/bracelets', getBraceletsController);
-router.get('/choker', getChokerController);
+router.get('/chokers', getChokerController);
 router.get('/earrings', getEarringsController);
 router.get('/chains', getChainsController);
 router.get('/pendants', getPendantsController);

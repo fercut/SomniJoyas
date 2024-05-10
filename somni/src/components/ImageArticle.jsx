@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
 import '../style/ImageArticle.css';
+import { http } from '../config';
 
 const ImageArticle = ({ type, imageUrl, material, finish, dimensions, details, price, id, onClose }) => {
   const handleKeyDown = (event) => {
@@ -35,11 +36,6 @@ const ImageArticle = ({ type, imageUrl, material, finish, dimensions, details, p
     
       const userId = sessionStorage.getItem('userId');
 
-      if (!userId) {
-        console.error('UserId no encontrado en sessionStorage');
-        return;
-      }
-
       if (!id) {
         console.error('El artículo no tiene un ID definido');
         return;
@@ -49,7 +45,7 @@ const ImageArticle = ({ type, imageUrl, material, finish, dimensions, details, p
         return;
       }
 
-      const response = await fetch(`${process.env.CONECTION}/users/${userId}`, {
+      const response = await fetch(`${http}/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +78,12 @@ const ImageArticle = ({ type, imageUrl, material, finish, dimensions, details, p
         }, 1000);
         onBuyClick(id);
       } else {
-        console.error('Error al agregar al carrito:', data.error);
+        setAlert({
+          title: 'INICIE SESIÓN',
+          content: 'Por favor inicie sesión antes de seguir comprando',
+          showAlert: true,
+        });
+        console.error('Error al agregar al carrito, usuario: ', data.error);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);

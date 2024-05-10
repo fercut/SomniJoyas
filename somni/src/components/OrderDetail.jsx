@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { http } from '../config';
 
 
 const OrderDetail = ({ order, onClose }) => {
@@ -7,10 +8,16 @@ const OrderDetail = ({ order, onClose }) => {
     useEffect(() => {
         const fetchArticleDetails = async () => {
             try {
-                //TODO problemas con las unidades y extraccion de datos
-                const articleDetails = await Promise.all(order.article.articleId.map(async articleId => {
-                    console.log(articleId)
-                    const response = await fetch(`${process.env.CONECTION}/articles/get/${articleId}`);
+                if (!order || !order.article || order.article.length === 0) {
+                    console.error('La orden o el campo article es nulo o está vacío');
+                    return;
+                }
+                
+                // Extraer los ObjectId de los artículos de la orden
+                const articleIds = order.article.map(article => article.$oid);
+    
+                const articleDetails = await Promise.all(articleIds.map(async articleId => {
+                    const response = await fetch(`${http}/articles/get/${articleId}`);
                     if (response.ok) {
                         const articleDetail = await response.json();
                         return articleDetail;
@@ -19,14 +26,14 @@ const OrderDetail = ({ order, onClose }) => {
                     }
                 }));
                 setArticles(articleDetails);
-                console.log(articleDetails);
             } catch (error) {
                 console.error('Error al obtener los detalles de los artículos:', error);
             }
         };
-
+    
         fetchArticleDetails();
     }, [order]);
+    
 
     return (
         <div className="modal">

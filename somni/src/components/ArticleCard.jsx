@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ImageArticle from './ImageArticle';
 import Alert from './Alert';
 import '../style/ArticleCard.css'
+import { http } from '../config';
 
 const ArticleCard = ({ article, onBuyClick }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,22 +16,12 @@ const ArticleCard = ({ article, onBuyClick }) => {
   const handleBuyClick = async () => {
     try {
       const userId = sessionStorage.getItem('userId');
-  
-      if (!userId) {
-        console.error('UserId no encontrado en sessionStorage');
-        return;
-      }
-  
-      if (!article._id) {
-        console.error('El artículo no tiene un ID definido');
-        return;
-      }
-  
-      const isArticleAlreadyInCart = isArticleInCart(article._id);
-  
-      if (isArticleAlreadyInCart) {
-        return;
-      }
+      
+      // TODO arreglar dos articulos iguales
+      //const isArticleAlreadyInCart = isArticleInCart(article._id);
+      // if (isArticleAlreadyInCart) {
+      //   return;
+      // }
   
       const requestOptions = {
         method: 'PATCH',
@@ -48,7 +39,7 @@ const ArticleCard = ({ article, onBuyClick }) => {
         }),
       };
   
-      const response = await fetch(`${process.env.CONECTION}/users/${userId}`, requestOptions);
+      const response = await fetch(`${http}/users/${userId}`, requestOptions);
       const data = await response.json();
   
       if (response.ok) {
@@ -65,6 +56,11 @@ const ArticleCard = ({ article, onBuyClick }) => {
         setIsModalOpen(false);
         onBuyClick(article._id);
       } else {
+        setAlert({
+          title: 'INICIE SESIÓN',
+          content: 'Por favor inicie sesión antes de seguir comprando',
+          showAlert: true,
+        });
         console.error('Error al agregar al carrito:', data.error);
       }
     } catch (error) {
