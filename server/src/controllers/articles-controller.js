@@ -1,55 +1,55 @@
 import {
-   createArticle,
-   getArticles,
-   getArticleByID,
-   updateArticle,
-   deleteArticle,
-   getRings,
-   getBracelets,
-   getChoker,
-   getEarrings,
-   getChains,
-   getPendants,
-   getSearch,
-   getMixArticles,
-  } from '../services/database/article-db-service.js';
+  createArticle,
+  getArticles,
+  getArticleByID,
+  updateArticle,
+  deleteArticle,
+  getRings,
+  getBracelets,
+  getChoker,
+  getEarrings,
+  getChains,
+  getPendants,
+  getSearch,
+  getMixArticles,
+} from '../services/database/article-db-service.js';
 
-export async function getArticleController(req,res,next){
+export async function getArticleController(req, res, next) {
   try {
     const articles = await getArticles(req.query);
     return res.json(articles);
-  } catch (error){
+  } catch (error) {
     next(error);
   }
 }
 
-export async function getArticleByIDController(req,res,next){
+export async function getArticleByIDController(req, res, next) {
   try {
     const article = await getArticleByID(req.params.id);
     return res.json(article);
-  } catch (error){
+  } catch (error) {
     next(error);
   }
 }
 
-export async function createArticleController(req, res, next){
-  try{
+export async function createArticleController(req, res, next) {
+  try {
     const body = req.body;
     const articles = await createArticle(body);
     return res.status(201).send(articles);
   } catch (error) {
 
-    if(error.code === 11000){
+    if (error.code === 11000) {
       error.status = 409;
     }
-    if(error.message.includes('validation')){
+    if (error.message.includes('validation')) {
       error.status = 400;
     }
     next(error);
   }
 }
 
-export async function updateArticleController(req, res, next){
+export async function updateArticleController(req, res, next) {
   try {
     const update = await updateArticle(req.params.id, req.body);
     res.json(update);
@@ -69,7 +69,9 @@ export const deleteArticleController = async (req, res) => {
 
 export async function getRingsController(req, res, next) {
   try {
-    const rings = await getRings({ type: 'anillo' });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 8;
+    const rings = await getRings({ type: 'anillo' }, page, pageSize);
     return res.status(200).json(rings);
   } catch (error) {
     console.error('Error al obtener los anillos:', error);
@@ -80,7 +82,9 @@ export async function getRingsController(req, res, next) {
 
 export async function getBraceletsController(req, res, next) {
   try {
-    const bracelets = await getBracelets({ type: 'pulsera' });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 8;
+    const bracelets = await getBracelets({ type: 'pulsera' }, page, pageSize);
     res.status(200).json(bracelets);
   } catch (error) {
     console.error('Error al obtener las pulseras:', error);
@@ -91,7 +95,9 @@ export async function getBraceletsController(req, res, next) {
 
 export async function getChokerController(req, res, next) {
   try {
-    const chokers = await getChoker({ type: 'gargantilla' });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 8;
+    const chokers = await getChoker({ type: 'gargantilla' }, page, pageSize);
     res.status(200).json(chokers);
   } catch (error) {
     console.error('Error al obtener las gargantillas:', error);
@@ -102,7 +108,9 @@ export async function getChokerController(req, res, next) {
 
 export async function getEarringsController(req, res, next) {
   try {
-    const earrings = await getEarrings({ type: 'pendiente' });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 8;
+    const earrings = await getEarrings({ type: 'pendiente' }, page, pageSize);
     res.status(200).json(earrings);
   } catch (error) {
     console.error('Error al obtener los pendientes:', error);
@@ -113,7 +121,9 @@ export async function getEarringsController(req, res, next) {
 
 export async function getChainsController(req, res, next) {
   try {
-    const chains = await getChains({ type: 'cadena' });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 8;
+    const chains = await getChains({ type: 'cadena' }, page, pageSize);
     res.status(200).json(chains);
   } catch (error) {
     console.error('Error al obtener las cadenas:', error);
@@ -124,7 +134,9 @@ export async function getChainsController(req, res, next) {
 
 export async function getPendantsController(req, res, next) {
   try {
-    const pendants = await getPendants({ type: 'colgante' });
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 8;
+    const pendants = await getPendants({ type: 'colgante' }, page, pageSize);
     res.status(200).json(pendants);
   } catch (error) {
     console.error('Error al obtener los colgantes:', error);
@@ -154,9 +166,11 @@ export async function getSearchController(req, res, next) {
 
 export async function getHomeController(req, res, next) {
   try {
-    const articles = await getMixArticles(req.query);
+    const { page = 1, pageSize = 8 } = req.query;
+    const articles = await getMixArticles(parseInt(page), parseInt(pageSize));
     return res.json(articles);
-  } catch (error){
+  } catch (error) {
     next(error);
   }
 }
+

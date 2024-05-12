@@ -1,0 +1,63 @@
+[
+    {
+      "user": "id_del_usuario_1",
+      "article": ["id_del_articulo_1"],
+      "date": "2023-01-01T12:00:00Z",
+      "price": 30.50
+    },
+    {
+      "user": "id_del_usuario_2",
+      "article": ["id_del_articulo_2", "id_del_articulo_3"],
+      "date": "2023-01-02T14:30:00Z",
+      "price": 45.00
+    },
+    {
+      "user": "id_del_usuario_3",
+      "article": ["id_del_articulo_1", "id_del_articulo_3"],
+      "date": "2023-01-03T10:45:00Z",
+      "price": 22.75
+    },
+    {
+      "user": "id_del_usuario_1",
+      "article": ["id_del_articulo_4"],
+      "date": "2023-01-04T18:20:00Z",
+      "price": 15.00
+    },
+    {
+      "user": "id_del_usuario_2",
+      "article": ["id_del_articulo_1", "id_del_articulo_4"],
+      "date": "2023-01-05T11:10:00Z",
+      "price": 28.00
+    },
+    {
+      "user": "id_del_usuario_3",
+      "article": ["id_del_articulo_2"],
+      "date": "2023-01-06T15:45:00Z",
+      "price": 18.90
+    },
+    {
+      "user": "id_del_usuario_1",
+      "article": ["id_del_articulo_3", "id_del_articulo_4"],
+      "date": "2023-01-07T09:30:00Z",
+      "price": 33.75
+    },
+    {
+      "user": "id_del_usuario_2",
+      "article": ["id_del_articulo_2"],
+      "date": "2023-01-08T17:15:00Z",
+      "price": 12.50
+    },
+    {
+      "user": "id_del_usuario_3",
+      "article": ["id_del_articulo_1", "id_del_articulo_2", "id_del_articulo_3"],
+      "date": "2023-01-09T13:00:00Z",
+      "price": 50.20
+    },
+    {
+      "user": "id_del_usuario_1",
+      "article": ["id_del_articulo_4"],
+      "date": "2023-01-10T10:00:00Z",
+      "price": 15.00
+    }
+  ]
+  
