@@ -1,26 +1,25 @@
 import { HttpStatusError } from 'common-errors';
 import jwt from 'jsonwebtoken';
-import { getUserByEmail } from '../services/database/user-db-services.js'
+import { getUserByEmail } from '../services/database/user-db-services.js';
 import config from '../config.js';
 import { checkHash } from '../utils/encrypt.js';
 
-export async function login(req, res, next){
+export async function login(req, res, next) {
+  const { email, password } = req.body;
 
-    const { email, password } = req.body;
-
-    try {
+  try {
     const user = await getUserByEmail(email);
 
     if (user) {
       const isPasswordValid = await checkHash(password, user.password);
 
       if (isPasswordValid) {
-        const userInfo = { id: user.id, name: user.name, email: user.email };
+        const userInfo = { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin };
         const jwtConfig = { expiresIn: '24h' };
-        const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig);
+        const token = jwt.sign(userInfo, user.isAdmin ? config.app.secretRoot : config.app.secretKey, jwtConfig);
         const userId = user.id;
 
-        return res.status(200).send({ token, userId });S
+        return res.status(200).send({ token, userId, isAdmin: user.isAdmin });
       }
     }
 

@@ -12,6 +12,7 @@ const userSchema = new Schema({
   city: {type: String, require: true, trim: true},
   postalCode: {type: Number, require: true, trim: true},
   password: { type: String, require: true, trim: true},
+  isAdmin: { type: Boolean, default: false },
   cart: [
     {
       itemId: {

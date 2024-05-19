@@ -27,7 +27,7 @@
 > **FRONTEND >** El frontend esta desarrollada con **REACT + VITE**, esta alojada en el directorio **/somni** y desplegada con **Vercel** en el enlace https://somnijoyas.vercel.app/rings (aunque tarda muchisimo la respuesta hasta que implemente la paginacion, en local funciona inmediato).
 >
 > **PD:** para el uso en local hacer cambios el fichero /somni/src/config.jsx y un usuario demo seria:
-> Usuario: fermin@fermin.es
+>Usuario: fermin@fermin.es
 > Contraseña: 12345678
 > Si no siempre te quedara la opcion de registrarte.
 

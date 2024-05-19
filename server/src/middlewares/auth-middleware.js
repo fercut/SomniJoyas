@@ -1,7 +1,6 @@
 import { HttpStatusError } from "common-errors";
 import jwt from "jsonwebtoken";
 import logger from "../utils/logger.js";
-
 import config from "../config.js";
 
 export function checkToken(req, res, next){
