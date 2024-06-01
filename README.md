@@ -38,12 +38,10 @@
 
 <center>
 
-## ✏️ Tareas pendientes
+## ✅ Tareas terminadas
 ---
 </center>
 
-> * **Test** unitarios de la API
-> * **Test** unitarios del Frontend
 > * Manejo de **unidades de articulos** de coleccion Orders para mejorar el "Ver pedidos" del panel de usuario
 > * **SMTP** para que el usuario contacte con SomniJoyas o modo retroalimentacion cuando realice un pedido
 > * **Paginacion** en todas las ventanas de articulos
@@ -51,6 +49,17 @@
 >    * Manejo de stock de articulos
 >    * CRUD de articulos de forma visual y comoda
 >    * Manejo de usuarios y ordenes asociadas
+> * **Mejorar aspecto visual** de todo en general
+
+<center>
+
+## ✏️ Tareas pendientes
+---
+</center>
+
+> * **@media** WEB apta para dispocitivos moviles (responsive)
+> * **Test** unitarios de la API
+> * **Test** unitarios del Frontend
 > * **Mejorar aspecto visual** de todo en general
 
 <center>
