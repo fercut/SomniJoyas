@@ -17,10 +17,6 @@ import Root from './Screens/Root';
 import './style/App.css';
 
 const App = () => {
-  const handleSearch = (searchTerm) => {
-    console.log('Realizar búsqueda con término:', searchTerm);
-  };
-
   const [token, setToken] = useState(sessionStorage.getItem('token'));
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -74,7 +70,7 @@ const App = () => {
               path="login"
               element={token && !tokenExpired ? <Navigate to={isAdmin ? "/root" : "/user"} /> : <Login onLogin={handleLogin} />}
             />
-            <Route path="user" element={<User />} />
+            <Route path="user" element={token && !tokenExpired ? (isAdmin ? <Navigate to="/root" /> : <User />) : <Navigate to="/login" />} />
             <Route
               path="root"
               element={token && !tokenExpired && isAdmin ? <Root /> : <Navigate to="/user" />}

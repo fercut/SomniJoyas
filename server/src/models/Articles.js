@@ -6,7 +6,7 @@ const articlesSchema = new Schema({
   type: {
     type: String,
     require: true,
-    enum: ['anillo', 'pendientes', 'pulseras', 'cadenas', 'gargantillas', 'colgante']
+    enum: ['anillo', 'pendientes', 'pulsera', 'cadena', 'gargantilla', 'colgante']
   },
   material: {
     type: String,

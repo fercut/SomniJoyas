@@ -6,14 +6,14 @@ import {
         updateOrderController,
         deleteOrderController,
 } from '../controllers/orders-controller.js';
-import { checkRoot, checkToken } from '../middlewares/auth-middleware.js';
+import { checkToken } from '../middlewares/auth-middleware.js';
 
 const router = Router();
 
-router.get('/', checkRoot, getOrdersController);
+router.get('/', getOrdersController);
 router.get('/order/:userId', checkToken, getOrdersByIdController);
 router.post('/', checkToken, createOrderController);
-router.patch('/:id', checkRoot, updateOrderController);
-router.delete('/:id', checkRoot, deleteOrderController);
+router.patch('/:id', updateOrderController);
+router.delete('/:id', deleteOrderController);
 
 export default router;

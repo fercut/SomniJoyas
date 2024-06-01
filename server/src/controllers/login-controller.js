@@ -16,7 +16,7 @@ export async function login(req, res, next) {
       if (isPasswordValid) {
         const userInfo = { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin };
         const jwtConfig = { expiresIn: '24h' };
-        const token = jwt.sign(userInfo, user.isAdmin ? config.app.secretRoot : config.app.secretKey, jwtConfig);
+        const token = jwt.sign(userInfo, config.app.secretKey, jwtConfig); // Utilizamos una única clave secreta
         const userId = user.id;
 
         return res.status(200).send({ token, userId, isAdmin: user.isAdmin });
@@ -28,13 +28,3 @@ export async function login(req, res, next) {
     next(error);
   }
 }
-
-
-
-
-
-
-
-
-
-

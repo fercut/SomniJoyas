@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
@@ -7,11 +8,13 @@ import { errorMiddleware } from '../middlewares/error-middleware.js';
 import { morganMiddleware } from '../config/morgan.js';
 import { swaggerDoc } from '../openapi/index.js';
 
-export default function(server){   
+export default function (server) {
     /* Config */
+    server.use(bodyParser.json({ limit: '50mb' }));
+    server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
     server.use(cors());
     server.use(express.json());
-    server.use(express.urlencoded({ extended: true}));
+    server.use(express.urlencoded({ extended: true }));
 
     /* Static files */
     server.use(express.static('public'));
@@ -25,7 +28,7 @@ export default function(server){
 
     /* Routes */
     server.use(router);
-    
+
     /* Error handler */
     server.use(errorMiddleware);
 }
